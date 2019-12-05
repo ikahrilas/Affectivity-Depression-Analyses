@@ -1,0 +1,726 @@
+---
+title: "Tables"
+author: "Ian Kahrilas"
+date: "11/15/2019"
+output: pdf_document
+ keep_tex: yes
+  latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# install.packages("devtools")
+library(devtools)
+# install.packages("tinytex)
+library(tinytex)
+# install.packages("knitr")
+library(knitr)
+library(tidyverse)
+library(magick)
+library(webshot)
+```
+
+```{r install kableExtra, message = FALSE}
+# devtools::install_github("haozhu233/kableExtra")
+library(kableExtra)
+# load in parameter dataset
+library(readr)
+```
+
+```{r load parameter data, include = FALSE}
+parms <- readr::read_csv("parms.csv")
+sad_data <- readr::read_csv("total_data.csv")
+```
+
+```{r anticipating results}
+# name of antecedents
+ant <- tibble(ant = c("$X$(PA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "$X$(NA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "$C_{1}$(SEX)", "$C_{2}$(WOR)", "$C_{3}$(ANX)", "Intercept"))
+# path coefficients 
+m1_coef <- c(
+  parms %>%
+    filter(lhs == "anticipating", rhs == "masq_pa") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+     filter(lhs == "anticipating", rhs == "masq_na") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+    filter(lhs == "anticipating", rhs == "sex") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "anticipating", rhs == "pswq_total") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "anticipating", rhs == "masq_aa") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "anticipating", op == "~1") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3)
+)
+# standard errors
+m1_se <- c(
+  parms %>%
+    filter(lhs == "anticipating", rhs == "masq_pa") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+     filter(lhs == "anticipating", rhs == "masq_na") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+    filter(lhs == "anticipating", rhs == "sex") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "anticipating", rhs == "pswq_total") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "anticipating", rhs == "masq_aa") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "anticipating", op == "~1") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3)
+)
+# p values
+m1_p <- c(
+  parms %>%
+    filter(lhs == "anticipating", rhs == "masq_pa") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3),
+  NA,
+  NA,
+  NA,
+  parms %>%
+     filter(lhs == "anticipating", rhs == "masq_na") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  NA,
+  NA,
+  NA,
+  parms %>%
+    filter(lhs == "anticipating", rhs == "sex") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "anticipating", rhs == "pswq_total") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "anticipating", rhs == "masq_aa") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "anticipating", op == "~1") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3)
+)
+m1_p[!is.na(m1_p) & m1_p < .001] <- "<.001"
+m1_p[is.na(m1_p)] <- "---"
+# results for anticipating
+results_m1 <- tibble(
+       Coef. = m1_coef,
+       SE = m1_se,
+       p = m1_p
+       )
+```
+
+```{r savoring the moment results}
+# coefficients
+m2_coef <- c(
+  parms %>%
+    filter(lhs == "savoring_moment", rhs == "masq_pa") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "masq_na") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+    filter(lhs == "savoring_moment", rhs == "sex") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "pswq_total") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "masq_aa") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "savoring_moment", op == "~1") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3)
+)
+# standard errors
+m2_se <- c(
+  parms %>%
+    filter(lhs == "savoring_moment", rhs == "masq_pa") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "masq_na") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+    filter(lhs == "savoring_moment", rhs == "sex") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "pswq_total") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "masq_aa") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "savoring_moment", op == "~1") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3)
+)
+# p values
+m2_p <- c(
+  parms %>%
+    filter(lhs == "savoring_moment", rhs == "masq_pa") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3),
+  NA,
+  NA,
+  NA,
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "masq_na") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  NA,
+  NA,
+  NA,
+  parms %>%
+    filter(lhs == "savoring_moment", rhs == "sex") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "pswq_total") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "savoring_moment", rhs == "masq_aa") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "savoring_moment", op == "~1") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3)
+)
+m2_p[!is.na(m2_p) & m2_p < .001] <- "<.001"
+m2_p[is.na(m2_p)] <- "---"
+# results table
+results_m2 <- tibble(
+       Coef. = m2_coef,
+       SE = m2_se,
+       p = m2_p
+       )
+```
+
+```{r reminiscing results}
+# coefficients
+m3_coef <- c(
+  parms %>%
+    filter(lhs == "reminiscing", rhs == "masq_pa") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "masq_na") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+    filter(lhs == "reminiscing", rhs == "sex") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "pswq_total") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "masq_aa") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "reminiscing", op == "~1") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3)
+)
+# standard errors
+m3_se <- c(
+  parms %>%
+    filter(lhs == "reminiscing", rhs == "masq_pa") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "masq_na") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+    filter(lhs == "reminiscing", rhs == "sex") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "pswq_total") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "masq_aa") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "reminiscing", op == "~1") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3)
+)
+# p values
+m3_p <- c(
+  parms %>%
+    filter(lhs == "reminiscing", rhs == "masq_pa") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3),
+  NA,
+  NA,
+  NA,
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "masq_na") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  NA,
+  NA,
+  NA,
+  parms %>%
+    filter(lhs == "reminiscing", rhs == "sex") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "pswq_total") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "reminiscing", rhs == "masq_aa") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "reminiscing", op == "~1") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3)
+)
+m3_p[!is.na(m3_p) & m3_p < .001] <- "<.001"
+m3_p[is.na(m3_p)] <- "---"
+# results
+results_m3 <- tibble(
+       Coef. = m3_coef,
+       SE = m3_se,
+       p = m3_p
+       )
+```
+
+```{r direct depression results}
+# coefficients
+dep_coef <- c(
+  parms %>%
+    filter(lhs == "phq_total", rhs == "masq_pa") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+     filter(lhs == "phq_total", rhs == "masq_na") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+    filter(lhs == "phq_total", rhs == "sex") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "phq_total", rhs == "pswq_total") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "phq_total", rhs == "masq_aa") %>%
+     select(est) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "phq_total", op == "~1") %>%
+    select(est) %>%
+    pull() %>%
+    round(digits = 3)
+)
+# standard errors
+dep_se <- c(
+  parms %>%
+    filter(lhs == "phq_total", rhs == "masq_pa") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+     filter(lhs == "phq_total", rhs == "masq_na") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  "---",
+  "---",
+  "---",
+  parms %>%
+    filter(lhs == "phq_total", rhs == "sex") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "phq_total", rhs == "pswq_total") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "phq_total", rhs == "masq_aa") %>%
+     select(se) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "phq_total", op == "~1") %>%
+    select(se) %>%
+    pull() %>%
+    round(digits = 3)
+)
+# p values
+dep_p <- c(
+  parms %>%
+    filter(lhs == "phq_total", rhs == "masq_pa") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3),
+  NA,
+  NA,
+  NA,
+  parms %>%
+     filter(lhs == "phq_total", rhs == "masq_na") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  NA,
+  NA,
+  NA,
+  parms %>%
+    filter(lhs == "phq_total", rhs == "sex") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "phq_total", rhs == "pswq_total") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+     filter(lhs == "phq_total", rhs == "masq_aa") %>%
+     select(pvalue) %>%
+     pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(lhs == "phq_total", op == "~1") %>%
+    select(pvalue) %>%
+    pull() %>%
+    round(digits = 3)
+)
+dep_p[!is.na(dep_p) & dep_p<.001] <- "<.001"
+dep_p[is.na(dep_p)] <- "---"
+# results
+results_dep <- tibble(Coef. = dep_coef,
+       SE = dep_se,
+       p = dep_p)
+```
+
+```{r indirect effects}
+# indirect effect coefficients
+ind_coef <- c(
+  "---",
+  parms %>% 
+    filter(rhs == "a3*b3") %>% 
+    select(est) %>% 
+    pull() %>%
+    round(digits = 3),
+  parms %>%
+    filter(rhs == "a2*b2") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(rhs == "a1*b1") %>% 
+    select(est) %>%
+    pull() %>% 
+    round(digits = 3),
+  "---",
+  parms %>% 
+    filter(rhs == "aiii*b3") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(rhs == "aii*b2") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3), 
+  parms %>% 
+    filter(rhs == "ai*b1") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
+  rep("---", times = 4)
+)
+# indirect confidence intervals
+ind_ci <- c("---",
+            paste0("[", 
+                   parms %>%
+                    filter(rhs == "a3*b3") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", ",
+                  parms %>%
+                    filter(rhs == "a3*b3") %>% 
+                    select(ci.upper) %>% 
+                    pull() %>%
+                    round(digits = 3),
+                  "]"),
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "a2*b2") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", ",
+                  parms %>%
+                    filter(rhs == "a2*b2") %>% 
+                    select(ci.upper) %>% 
+                    pull() %>%
+                    round(digits = 3),
+                  "]"),
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "a1*b1") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", ",
+                  parms %>%
+                    filter(rhs == "a1*b1") %>% 
+                    select(ci.upper) %>% 
+                    pull() %>%
+                    round(digits = 3),
+                  "]"),
+            "---",
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "aiii*b3") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", ",
+                  parms %>% 
+                    filter(rhs == "aiii*b3") %>% 
+                    select(ci.upper) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  "]"),
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "aii*b2") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", ",
+                  parms %>% 
+                    filter(rhs == "aii*b2") %>% 
+                    select(ci.upper) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  "]"),
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "ai*b1") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", ",
+                  parms %>% 
+                    filter(rhs == "ai*b1") %>% 
+                    select(ci.upper) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  "]"),
+            rep("---", times = 4)
+          )
+results_ind <- tibble(
+  Coef. = ind_coef,
+  `95% CI` = ind_ci)
+```
+
+
+```{r merge all results together into a single tibble}
+paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), "$i_{M_1}$"))
+paths_2 <- tibble(" " = c("$a_2$", rep(" ", 3), "$a_{ii}$", rep(" ", 6), "$i_{M_2}$"))
+paths_3 <- tibble(" " = c("$a_3$", rep(" ", 3), "$a_{iii}$", rep(" ", 6), "$i_{M_3}$"))
+paths_dep <- tibble(" " = c("$c'_{PA}$", rep(" ", 3), "$c'_{NA}$", rep(" ", 6), "$i_{Y}$"))
+paths_ind <- tibble(" " = c(" ", "$b_{1}$", "$b_{2}$", "$b_{3}$", " ", "$b_{i}$", "$b_{ii}$", "$b_{iii}$", rep(" ", 4)))
+
+results_total <- bind_cols(ant, paths_1, results_m1, paths_2, results_m2, paths_3, results_m3, paths_dep, results_dep, paths_ind, results_ind)
+names(results_total) <- c("Antecedent",
+                          " ",
+                          "Coef.",
+                          "SE",
+                          "$p$",
+                          " ",
+                          "Coef.",
+                          "SE",
+                          "$p$",
+                          " ",
+                          "Coef.",
+                          "SE",
+                          "$p$",
+                          " ",
+                          "Coef.",
+                          "SE",
+                          "$p$",
+                          " ",
+                          "Coef.",
+                          "95\\% bcCI"
+                          )
+results_total[13:15, ] <- vector("character", length = ncol(results_total))
+```
+
+```{r latex table}
+kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep("c", times = 19)), linesep = "", caption = "Unstandardized model coefficients for path analysis with positive and negative affectivity as predictors") %>%
+  kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
+  add_header_above(c(" ", " ", "$M_1$(ANT)" = 3, " ", "$M_2$(MOM)" = 3, " ", "$M_3$(REM)" = 3, " ", "$Y(DEP)$" = 3, " ", "$Indirect\\\\ Effects$" = 2), escape = FALSE) %>% 
+  add_indent(c(2:4, 6:8)) %>% 
+  footnote(general = "PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
+  column_spec(c(2, 6, 10, 18), width = "0.3cm") %>%
+  column_spec(14, width = "0.4cm") %>% 
+  landscape() %>% 
+  as_image()
+```
+
+```{r F-statistics for output, }
+ant_model <- lm(anticipating ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
+
+mom_model <- lm(savoring_moment ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
+
+rem_model <- lm(reminiscing ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
+
+dep_model <- lm(phq_total ~ masq_pa + masq_na + sex + pswq_total + masq_aa + anticipating  + savoring_moment + reminiscing, data = sad_data)
+
+```
