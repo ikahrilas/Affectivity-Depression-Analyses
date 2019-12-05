@@ -426,17 +426,41 @@ dep_coef <- c(
     select(est) %>%
     pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "anticipating") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "savoring_moment") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "reminiscing") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
   parms %>%
      filter(lhs == "phq_total", rhs == "masq_na") %>%
      select(est) %>%
      pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "anticipating") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "savoring_moment") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "reminiscing") %>% 
+    select(est) %>% 
+    pull() %>% 
+    round(digits = 3),
   parms %>%
     filter(lhs == "phq_total", rhs == "sex") %>%
     select(est) %>%
@@ -674,8 +698,8 @@ results_ind <- tibble(
 paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), "$i_{M_1}$"))
 paths_2 <- tibble(" " = c("$a_2$", rep(" ", 3), "$a_{ii}$", rep(" ", 6), "$i_{M_2}$"))
 paths_3 <- tibble(" " = c("$a_3$", rep(" ", 3), "$a_{iii}$", rep(" ", 6), "$i_{M_3}$"))
-paths_dep <- tibble(" " = c("$c'_{PA}$", rep(" ", 3), "$c'_{NA}$", rep(" ", 6), "$i_{Y}$"))
-paths_ind <- tibble(" " = c(" ", "$b_{1}$", "$b_{2}$", "$b_{3}$", " ", "$b_{i}$", "$b_{ii}$", "$b_{iii}$", rep(" ", 4)))
+paths_dep <- tibble(" " = c("$c'_{PA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", "$c'_{NA}$", "$b_{i}$", "$b_{ii}$", "$b_{iii}$", rep(" ", 3), "$i_{Y}$"))
+paths_ind <- tibble(" " = c(" ", "$a_{1}b_{1}$", "$a_{2}b_{2}$", "$a_{3}b_{3}$", " ", "$a_{i}b_{i}$", "$a_{ii}b_{ii}$", "$a_{iii}b_{iii}$", rep(" ", 4)))
 
 results_total <- bind_cols(ant, paths_1, results_m1, paths_2, results_m2, paths_3, results_m3, paths_dep, results_dep, paths_ind, results_ind)
 names(results_total) <- c("Antecedent",
@@ -708,8 +732,9 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   add_header_above(c(" ", " ", "$M_1$(ANT)" = 3, " ", "$M_2$(MOM)" = 3, " ", "$M_3$(REM)" = 3, " ", "$Y(DEP)$" = 3, " ", "$Indirect\\\\ Effects$" = 2), escape = FALSE) %>% 
   add_indent(c(2:4, 6:8)) %>% 
   footnote(general = "PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
-  column_spec(c(2, 6, 10, 18), width = "0.3cm") %>%
+  column_spec(c(2, 6, 10), width = "0.3cm") %>%
   column_spec(14, width = "0.4cm") %>% 
+  column_spec(18, width = "0.7cm") %>% 
   landscape() %>% 
   as_image()
 ```
