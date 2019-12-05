@@ -782,7 +782,7 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   footnote(general = "PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
   column_spec(c(2, 6, 10), width = "0.3cm") %>%
   column_spec(14, width = "0.4cm") %>% 
-  column_spec(18, width = "0.7cm") %>% 
+  column_spec(18, width = "0.6cm") %>% 
   landscape() %>% 
   as_image()
 ```
