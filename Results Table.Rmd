@@ -489,17 +489,41 @@ dep_se <- c(
     select(se) %>%
     pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "anticipating") %>% 
+    select(se) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "savoring_moment") %>% 
+    select(se) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "reminiscing") %>% 
+    select(se) %>% 
+    pull() %>% 
+    round(digits = 3),
   parms %>%
      filter(lhs == "phq_total", rhs == "masq_na") %>%
      select(se) %>%
      pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "anticipating") %>% 
+    select(se) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "savoring_moment") %>% 
+    select(se) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "reminiscing") %>% 
+    select(se) %>% 
+    pull() %>% 
+    round(digits = 3),
   parms %>%
     filter(lhs == "phq_total", rhs == "sex") %>%
     select(se) %>%
@@ -528,17 +552,41 @@ dep_p <- c(
     select(pvalue) %>%
     pull() %>%
     round(digits = 3),
-  NA,
-  NA,
-  NA,
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "anticipating") %>% 
+    select(pvalue) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "savoring_moment") %>% 
+    select(pvalue) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "reminiscing") %>% 
+    select(pvalue) %>% 
+    pull() %>% 
+    round(digits = 3),
   parms %>%
      filter(lhs == "phq_total", rhs == "masq_na") %>%
      select(pvalue) %>%
      pull() %>%
     round(digits = 3),
-  NA,
-  NA,
-  NA,
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "anticipating") %>% 
+    select(pvalue) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "savoring_moment") %>% 
+    select(pvalue) %>% 
+    pull() %>% 
+    round(digits = 3),
+  parms %>% 
+    filter(lhs == "phq_total", rhs == "reminiscing") %>% 
+    select(pvalue) %>% 
+    pull() %>% 
+    round(digits = 3),
   parms %>%
     filter(lhs == "phq_total", rhs == "sex") %>%
     select(pvalue) %>%
@@ -560,7 +608,7 @@ dep_p <- c(
     pull() %>%
     round(digits = 3)
 )
-dep_p[!is.na(dep_p) & dep_p<.001] <- "<.001"
+dep_p[!is.na(dep_p) & dep_p < .001] <- "<.001"
 dep_p[is.na(dep_p)] <- "---"
 # results
 results_dep <- tibble(Coef. = dep_coef,
