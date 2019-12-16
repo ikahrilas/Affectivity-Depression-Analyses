@@ -774,6 +774,29 @@ names(results_total) <- c("Antecedent",
 results_total[13:15, ] <- vector("character", length = ncol(results_total))
 ```
 
+```{r other necessary output for tables, }
+# fit linear models
+ant_model <- lm(anticipating ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
+
+mom_model <- lm(savoring_moment ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
+
+rem_model <- lm(reminiscing ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
+
+dep_model <- lm(phq_total ~ masq_pa + masq_na + sex + pswq_total + masq_aa + anticipating  + savoring_moment + reminiscing, data = sad_data)
+
+# extract degrees of freedom
+df_ant <- paste0("$F$(",summary(ant_model)$fstatistic[[2]], ",", " ", summary(ant_model)$fstatistic[[3]], ")")
+df_mom <- paste0("$F$(",summary(mom_model)$fstatistic[[2]], ",", " ", summary(mom_model)$fstatistic[[3]], ")")
+df_rem <- paste0("$F$(",summary(rem_model)$fstatistic[[2]], ",", " ", summary(rem_model)$fstatistic[[3]], ")")
+df_dep <- paste0("$F$(",summary(dep_model)$fstatistic[[2]], ",", " ", summary(dep_model)$fstatistic[[3]], ")")
+
+# F statistic value
+f_ant <- summary(ant_model)$fstatistic[[1]]
+f_mom <- summary(mom_model)$fstatistic[[1]]
+f_rem <- summary(rem_model)$fstatistic[[1]]
+f_dep <- summary(dep_model)$fstatistic[[1]]
+```
+
 ```{r latex table}
 kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep("c", times = 19)), linesep = "", caption = "Unstandardized model coefficients for path analysis with positive and negative affectivity as predictors") %>%
   kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
@@ -785,15 +808,4 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   column_spec(18, width = "0.6cm") %>% 
   landscape() %>% 
   as_image()
-```
-
-```{r F-statistics for output, }
-ant_model <- lm(anticipating ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
-
-mom_model <- lm(savoring_moment ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
-
-rem_model <- lm(reminiscing ~ masq_pa + masq_na + sex + pswq_total + masq_aa, data = sad_data)
-
-dep_model <- lm(phq_total ~ masq_pa + masq_na + sex + pswq_total + masq_aa + anticipating  + savoring_moment + reminiscing, data = sad_data)
-
 ```
