@@ -63,7 +63,8 @@ rsquare_dep <- round(summary(dep_model)$r.squared, digits = 3)
 
 ```{r anticipating results}
 # name of antecedents
-ant <- tibble(ant = c("$X$(PA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "$X$(NA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "$C_{1}$(SEX)", "$C_{2}$(WOR)", "$C_{3}$(ANX)", "Intercept"))
+ant <- tibble(ant = c("$X$(PA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "$X$(NA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "$C_{1}$(SEX)", "$C_{2}$(WOR)", "$C_{3}$(ANX)", "Intercept", "$R^2$", df_ant, "$p$"))
+
 # path coefficients 
 m1_coef <- c(
   parms %>%
@@ -101,7 +102,10 @@ m1_coef <- c(
     filter(lhs == "anticipating", op == "~1") %>%
     select(est) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  " ",
+  " ",
+  " "
 )
 # standard errors
 m1_se <- c(
@@ -140,7 +144,10 @@ m1_se <- c(
     filter(lhs == "anticipating", op == "~1") %>%
     select(se) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  rsquare_ant,
+  f_ant,
+  "<.001"
 )
 # p values
 m1_p <- c(
