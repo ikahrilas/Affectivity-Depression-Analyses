@@ -9,7 +9,6 @@ output: html_document
 library(readr)
 knitr::opts_chunk$set(echo = TRUE)
 sad_data <- read_csv("total_data.csv")
-readr::read_csv("parms.csv")
 ```
 
 First, we will load in the lavaan package. Lavaan is a structural equation modeling package for R. We will be using its more basic facilities to conduct path analyses.
