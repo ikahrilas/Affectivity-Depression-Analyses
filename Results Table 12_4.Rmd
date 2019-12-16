@@ -186,10 +186,16 @@ m1_p <- c(
     filter(lhs == "anticipating", op == "~1") %>%
     select(pvalue) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  999,
+  999,
+  999
 )
+
 m1_p[!is.na(m1_p) & m1_p < .001] <- "<.001"
 m1_p[is.na(m1_p)] <- "---"
+m1_p[m1_p == 999] <- " "
+
 # results for anticipating
 results_m1 <- tibble(
        Coef. = m1_coef,
@@ -236,7 +242,10 @@ m2_coef <- c(
     filter(lhs == "savoring_moment", op == "~1") %>%
     select(est) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  " ",
+  " ",
+  " "
 )
 # standard errors
 m2_se <- c(
