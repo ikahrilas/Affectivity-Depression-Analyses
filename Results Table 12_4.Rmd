@@ -49,10 +49,10 @@ df_rem <- paste0("$F$(",summary(rem_model)$fstatistic[[2]], ",", " ", summary(re
 df_dep <- paste0("$F$(",summary(dep_model)$fstatistic[[2]], ",", " ", summary(dep_model)$fstatistic[[3]], ")")
 
 # F statistic value
-f_ant <- summary(ant_model)$fstatistic[[1]]
-f_mom <- summary(mom_model)$fstatistic[[1]]
-f_rem <- summary(rem_model)$fstatistic[[1]]
-f_dep <- summary(dep_model)$fstatistic[[1]]
+f_ant <- round(summary(ant_model)$fstatistic[[1]], digits = 1)
+f_mom <- round(summary(mom_model)$fstatistic[[1]], digits = 1)
+f_rem <- round(summary(rem_model)$fstatistic[[1]], digits = 1)
+f_dep <- round(summary(dep_model)$fstatistic[[1]], digits = 1)
 
 # R-squared value
 rsquare_ant <- round(summary(ant_model)$r.squared, digits = 3)
@@ -284,7 +284,10 @@ m2_se <- c(
     filter(lhs == "savoring_moment", op == "~1") %>%
     select(se) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  rsquare_mom,
+  f_mom, 
+  "<.001"
 )
 # p values
 m2_p <- c(
@@ -323,10 +326,14 @@ m2_p <- c(
     filter(lhs == "savoring_moment", op == "~1") %>%
     select(pvalue) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  999,
+  999,
+  999
 )
 m2_p[!is.na(m2_p) & m2_p < .001] <- "<.001"
 m2_p[is.na(m2_p)] <- "---"
+m2_p[m2_p == 999] <- " "
 # results table
 results_m2 <- tibble(
        Coef. = m2_coef,
@@ -373,7 +380,10 @@ m3_coef <- c(
     filter(lhs == "reminiscing", op == "~1") %>%
     select(est) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  " ",
+  " ",
+  " "
 )
 # standard errors
 m3_se <- c(
@@ -412,7 +422,10 @@ m3_se <- c(
     filter(lhs == "reminiscing", op == "~1") %>%
     select(se) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  rsquare_rem,
+  f_rem,
+  "<.001"
 )
 # p values
 m3_p <- c(
@@ -451,10 +464,14 @@ m3_p <- c(
     filter(lhs == "reminiscing", op == "~1") %>%
     select(pvalue) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  999,
+  999,
+  999
 )
 m3_p[!is.na(m3_p) & m3_p < .001] <- "<.001"
 m3_p[is.na(m3_p)] <- "---"
+m3_p[m3_p == 999] <- " "
 # results
 results_m3 <- tibble(
        Coef. = m3_coef,
@@ -525,7 +542,10 @@ dep_coef <- c(
     filter(lhs == "phq_total", op == "~1") %>%
     select(est) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  " ",
+  " ",
+  " "
 )
 # standard errors
 dep_se <- c(
@@ -588,7 +608,10 @@ dep_se <- c(
     filter(lhs == "phq_total", op == "~1") %>%
     select(se) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  rsquare_dep,
+  f_dep,
+  "<.001"
 )
 # p values
 dep_p <- c(
@@ -651,10 +674,14 @@ dep_p <- c(
     filter(lhs == "phq_total", op == "~1") %>%
     select(pvalue) %>%
     pull() %>%
-    round(digits = 3)
+    round(digits = 3),
+  999,
+  999,
+  999
 )
 dep_p[!is.na(dep_p) & dep_p < .001] <- "<.001"
 dep_p[is.na(dep_p)] <- "---"
+dep_p[dep_p == 999]
 # results
 results_dep <- tibble(Coef. = dep_coef,
        SE = dep_se,
@@ -696,7 +723,10 @@ ind_coef <- c(
     select(est) %>% 
     pull() %>% 
     round(digits = 3),
-  rep("---", times = 4)
+  rep("---", times = 4),
+  " ",
+  " ",
+  " "
 )
 # indirect confidence intervals
 ind_ci <- c("---",
@@ -779,20 +809,22 @@ ind_ci <- c("---",
                     pull() %>% 
                     round(digits = 3),
                   "]"),
-            rep("---", times = 4)
+            rep("---", times = 4),
+            " ",
+            " ",
+            " "
           )
 results_ind <- tibble(
   Coef. = ind_coef,
   `95% CI` = ind_ci)
 ```
 
-
 ```{r merge all results together into a single tibble}
-paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), "$i_{M_1}$"))
-paths_2 <- tibble(" " = c("$a_2$", rep(" ", 3), "$a_{ii}$", rep(" ", 6), "$i_{M_2}$"))
-paths_3 <- tibble(" " = c("$a_3$", rep(" ", 3), "$a_{iii}$", rep(" ", 6), "$i_{M_3}$"))
-paths_dep <- tibble(" " = c("$c'_{PA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", "$c'_{NA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", rep(" ", 3), "$i_{Y}$"))
-paths_ind <- tibble(" " = c(" ", "$a_{1}b_{1}$", "$a_{2}b_{2}$", "$a_{3}b_{3}$", " ", "$a_{i}b_{1}$", "$a_{ii}b_{2}$", "$a_{iii}b_{3}$", rep(" ", 4)))
+paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), "$i_{M_1}$", rep(" ", 3)))
+paths_2 <- tibble(" " = c("$a_2$", rep(" ", 3), "$a_{ii}$", rep(" ", 6), "$i_{M_2}$", rep(" ", 3)))
+paths_3 <- tibble(" " = c("$a_3$", rep(" ", 3), "$a_{iii}$", rep(" ", 6), "$i_{M_3}$", rep(" ", 3)))
+paths_dep <- tibble(" " = c("$c'_{PA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", "$c'_{NA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", rep(" ", 3), "$i_{Y}$", "$R^2$", df_dep, "$p$"))
+paths_ind <- tibble(" " = c(" ", "$a_{1}b_{1}$", "$a_{2}b_{2}$", "$a_{3}b_{3}$", " ", "$a_{i}b_{1}$", "$a_{ii}b_{2}$", "$a_{iii}b_{3}$", rep(" ", 7)))
 
 results_total <- bind_cols(ant, paths_1, results_m1, paths_2, results_m2, paths_3, results_m3, paths_dep, results_dep, paths_ind, results_ind)
 names(results_total) <- c("Antecedent",
@@ -816,7 +848,6 @@ names(results_total) <- c("Antecedent",
                           "Coef.",
                           "95\\% bcCI"
                           )
-results_total[13:15, ] <- vector("character", length = ncol(results_total))
 ```
 
 ```{r latex table}
@@ -826,7 +857,6 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   add_indent(c(2:4, 6:8)) %>% 
   footnote(general = "PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
   column_spec(c(2, 6, 10), width = "0.3cm") %>%
-  column_spec(14, width = "0.4cm") %>% 
   column_spec(18, width = "0.6cm") %>% 
   landscape() %>% 
   as_image()
