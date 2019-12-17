@@ -63,7 +63,7 @@ rsquare_dep <- round(summary(dep_model)$r.squared, digits = 3)
 
 ```{r anticipating results}
 # name of antecedents
-ant <- tibble(ant = c("$X$(PA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "$X$(NA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "$C_{1}$(SEX)", "$C_{2}$(WOR)", "$C_{3}$(ANX)", "Intercept", "$R^2$", df_ant, "$p$"))
+ant <- tibble(ant = c("$X$(PA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "$X$(NA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "$C_{1}$(SEX)", "$C_{2}$(WOR)", "$C_{3}$(ANX)", "Intercept", "$R^2$", "$F$", "$p$"))
 
 # path coefficients 
 m1_coef <- c(
@@ -823,7 +823,7 @@ results_ind <- tibble(
 paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), "$i_{M_1}$", rep(" ", 3)))
 paths_2 <- tibble(" " = c("$a_2$", rep(" ", 3), "$a_{ii}$", rep(" ", 6), "$i_{M_2}$", rep(" ", 3)))
 paths_3 <- tibble(" " = c("$a_3$", rep(" ", 3), "$a_{iii}$", rep(" ", 6), "$i_{M_3}$", rep(" ", 3)))
-paths_dep <- tibble(" " = c("$c'_{PA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", "$c'_{NA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", rep(" ", 3), "$i_{Y}$", "$R^2$", df_dep, "$p$"))
+paths_dep <- tibble(" " = c("$c'_{PA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", "$c'_{NA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", rep(" ", 3), "$i_{Y}$", rep(" ", 3)))
 paths_ind <- tibble(" " = c(" ", "$a_{1}b_{1}$", "$a_{2}b_{2}$", "$a_{3}b_{3}$", " ", "$a_{i}b_{1}$", "$a_{ii}b_{2}$", "$a_{iii}b_{3}$", rep(" ", 7)))
 
 results_total <- bind_cols(ant, paths_1, results_m1, paths_2, results_m2, paths_3, results_m3, paths_dep, results_dep, paths_ind, results_ind)
