@@ -681,7 +681,7 @@ dep_p <- c(
 )
 dep_p[!is.na(dep_p) & dep_p < .001] <- "<.001"
 dep_p[is.na(dep_p)] <- "---"
-dep_p[dep_p == 999]
+dep_p[dep_p == 999] <- " "
 # results
 results_dep <- tibble(Coef. = dep_coef,
        SE = dep_se,
@@ -858,6 +858,7 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   footnote(general = "PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
   column_spec(c(2, 6, 10), width = "0.3cm") %>%
   column_spec(18, width = "0.6cm") %>% 
+  row_spec(12, hline_after = TRUE) %>% 
   landscape() %>% 
   as_image()
 ```
