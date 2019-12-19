@@ -352,11 +352,10 @@ m3_coef <- c(
   "---",
   "---",
   "---",
-  parms %>%
+  sprintf("%.3f", parms %>%
      filter(lhs == "reminiscing", rhs == "masq_na") %>%
      select(est) %>%
-     pull() %>%
-    round(digits = 3),
+     pull()),
   "---",
   "---",
   "---",
@@ -394,11 +393,10 @@ m3_se <- c(
   "---",
   "---",
   "---",
-  parms %>%
+  sprintf("%.3f", parms %>%
      filter(lhs == "reminiscing", rhs == "masq_na") %>%
      select(se) %>%
-     pull() %>%
-    round(digits = 3),
+     pull()),
   "---",
   "---",
   "---",
@@ -550,8 +548,7 @@ dep_se <- c(
   sprintf("%.3f", parms %>%
     filter(lhs == "phq_total", rhs == "masq_pa") %>%
     select(se) %>%
-    pull()) %>%
-    round(digits = 3),
+    pull()),
   parms %>% 
     filter(lhs == "phq_total", rhs == "anticipating") %>% 
     select(se) %>% 
