@@ -49,10 +49,10 @@ df_rem <- paste0("$F$(",summary(rem_model)$fstatistic[[2]], ",", " ", summary(re
 df_dep <- paste0("$F$(",summary(dep_model)$fstatistic[[2]], ",", " ", summary(dep_model)$fstatistic[[3]], ")")
 
 # F statistic value
-f_ant <- round(summary(ant_model)$fstatistic[[1]], digits = 1)
-f_mom <- round(summary(mom_model)$fstatistic[[1]], digits = 1)
-f_rem <- round(summary(rem_model)$fstatistic[[1]], digits = 1)
-f_dep <- round(summary(dep_model)$fstatistic[[1]], digits = 1)
+f_ant <- sprintf("%.1f", summary(ant_model)$fstatistic[[1]])
+f_mom <- sprintf("%.1f", summary(mom_model)$fstatistic[[1]])
+f_rem <- sprintf("%.1f", summary(rem_model)$fstatistic[[1]])
+f_dep <- sprintf("%.1f", summary(dep_model)$fstatistic[[1]])
 
 # R-squared value
 rsquare_ant <- round(summary(ant_model)$r.squared, digits = 3)
