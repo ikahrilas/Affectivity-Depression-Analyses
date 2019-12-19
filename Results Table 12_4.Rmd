@@ -55,10 +55,10 @@ f_rem <- sprintf("%.1f", summary(rem_model)$fstatistic[[1]])
 f_dep <- sprintf("%.1f", summary(dep_model)$fstatistic[[1]])
 
 # R-squared value
-rsquare_ant <- round(summary(ant_model)$r.squared, digits = 3)
-rsquare_mom <- round(summary(mom_model)$r.squared, digits = 3)
-rsquare_rem <- round(summary(rem_model)$r.squared, digits = 3)
-rsquare_dep <- round(summary(dep_model)$r.squared, digits = 3)
+rsquare_ant <- sprintf("%.3f", summary(ant_model)$r.squared)
+rsquare_mom <- sprintf("%.3f", summary(mom_model)$r.squared)
+rsquare_rem <- sprintf("%.3f", summary(rem_model)$r.squared)
+rsquare_dep <- sprintf("%.3f", summary(dep_model)$r.squared)
 ```
 
 ```{r anticipating results}
@@ -270,11 +270,10 @@ m2_se <- c(
     select(se) %>%
     pull() %>%
     round(digits = 3),
-  parms %>%
+  sprintf("%.3f",parms %>%
      filter(lhs == "savoring_moment", rhs == "pswq_total") %>%
      select(se) %>%
-     pull() %>%
-    round(digits = 3),
+     pull()),
   parms %>%
      filter(lhs == "savoring_moment", rhs == "masq_aa") %>%
      select(se) %>%
@@ -538,21 +537,20 @@ dep_coef <- c(
      select(est) %>%
      pull() %>%
     round(digits = 3),
-  parms %>%
+  sprintf("%.3f", parms %>%
     filter(lhs == "phq_total", op == "~1") %>%
     select(est) %>%
-    pull() %>%
-    round(digits = 3),
+    pull()),
   " ",
   " ",
   " "
 )
 # standard errors
 dep_se <- c(
-  parms %>%
+  sprintf("%.3f", parms %>%
     filter(lhs == "phq_total", rhs == "masq_pa") %>%
     select(se) %>%
-    pull() %>%
+    pull()) %>%
     round(digits = 3),
   parms %>% 
     filter(lhs == "phq_total", rhs == "anticipating") %>% 
