@@ -825,19 +825,19 @@ results_total <- bind_cols(ant, paths_1, results_m1, paths_2, results_m2, paths_
 names(results_total) <- c("Antecedent",
                           " ",
                           "Coef.",
-                          "SE",
+                          "$SE$",
                           "$p$",
                           " ",
                           "Coef.",
-                          "SE",
+                          "$SE$",
                           "$p$",
                           " ",
                           "Coef.",
-                          "SE",
+                          "$SE$",
                           "$p$",
                           " ",
                           "Coef.",
-                          "SE",
+                          "$SE$",
                           "$p$",
                           " ",
                           "Coef.",
@@ -850,7 +850,7 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
   add_header_above(c(" ", " ", "$M_1$(ANT)" = 3, " ", "$M_2$(MOM)" = 3, " ", "$M_3$(REM)" = 3, " ", "$Y(DEP)$" = 3, " ", "$Indirect\\\\ Effects$" = 2), escape = FALSE) %>% 
   add_indent(c(2:4, 6:8)) %>% 
-  footnote(general = "PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
+  footnote(general = "$SE$ = Standard Error, PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
   column_spec(c(2, 6, 10), width = "0.3cm") %>%
   column_spec(18, width = "0.6cm") %>% 
   row_spec(12, hline_after = TRUE) %>% 
