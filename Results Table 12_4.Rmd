@@ -851,7 +851,7 @@ names(results_total) <- c("Antecedent",
 ```
 
 ```{r latex table}
-kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep("c", times = 19)), linesep = "", caption = "Unstandardized model coefficients for path analysis with positive and negative affectivity as predictors") %>%
+kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep("c", times = 19)), linesep = "", caption = "Unstandardized path coefficients from structural equation model using positive and negative affectivity to predict depression with savoring subscales as mediators ($N$ = 1,680)") %>%
   kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
   add_header_above(c(" ", " ", "$M_1$(ANT)" = 3, " ", "$M_2$(MOM)" = 3, " ", "$M_3$(REM)" = 3, " ", "$Y(DEP)$" = 3, " ", "$Indirect\\\\ Effects$" = 2), escape = FALSE) %>% 
   add_indent(c(2:4, 6:8)) %>% 
