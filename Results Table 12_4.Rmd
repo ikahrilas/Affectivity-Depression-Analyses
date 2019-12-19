@@ -814,6 +814,39 @@ results_ind <- tibble(
   `95% CI` = ind_ci)
 ```
 
+```{r creating functions to add text padding so that decimal points align}
+# adds padding to coefficients column
+coef_pad <- function(x) {
+  map_chr(x$Coef., ~
+          if_else(str_detect(.x, "-"), 
+                  .x, 
+                  str_pad(.x, width = 6, side = "left")
+                  )
+        )
+}
+# adds padding to p-value column
+p_pad <- function(x) {
+  map_chr(x$p, ~
+          if_else(str_detect(.x, "0\\."),
+                  str_pad(.x, width = 6, side = "left"),
+                  .x
+                  )
+        )
+}
+```
+
+```{r add padding to columns using defined functions}
+results_m1$Coef. <- coef_pad(results_m1)
+results_m1$p <- p_pad(results_m1)
+results_m2$Coef. <- coef_pad(results_m2)
+results_m2$p <- p_pad(results_m2)
+results_m3$Coef. <- coef_pad(results_m3)
+results_m3$p <- p_pad(results_m3)
+results_dep$Coef. <- coef_pad(results_dep)
+results_dep$p <- p_pad(results_dep)
+```
+
+
 ```{r merge all results together into a single tibble}
 paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), "$i_{M_1}$", rep(" ", 3)))
 paths_2 <- tibble(" " = c("$a_2$", rep(" ", 3), "$a_{ii}$", rep(" ", 6), "$i_{M_2}$", rep(" ", 3)))
