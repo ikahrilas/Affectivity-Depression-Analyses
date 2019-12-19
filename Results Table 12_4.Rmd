@@ -835,6 +835,11 @@ p_pad <- function(x) {
 }
 ```
 
+```{r replace some p values as per Fred's request}
+results_m1[10, 3] <- "<.006"
+results_m3[10, 3] <- "<.088"
+```
+
 ```{r add padding to columns using defined functions}
 results_m1$Coef. <- coef_pad(results_m1)
 results_m1$p <- p_pad(results_m1)
@@ -879,7 +884,20 @@ names(results_total) <- c("Antecedent",
 ```
 
 ```{r latex table}
-kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep("c", times = 19)), linesep = "", caption = "Unstandardized path coefficients from structural equation model using positive and negative affectivity to predict depression with savoring subscales as mediators ($N$ = 1,680)") %>%
+kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep(c("c", "r", "c", "c"), 4), "c", "r", "c"), linesep = "", caption = "Unstandardized path coefficients from structural equation model using positive and negative affectivity to predict depression with savoring subscales as mediators ($N$ = 1,680)") %>%
+  kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
+  add_header_above(c(" ", " ", "$M_1$(ANT)" = 3, " ", "$M_2$(MOM)" = 3, " ", "$M_3$(REM)" = 3, " ", "$Y(DEP)$" = 3, " ", "Indirect Effects" = 2), escape = FALSE) %>% 
+  add_indent(c(2:4, 6:8)) %>% 
+  footnote(general = "$SE$ = Standard Error, PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
+  column_spec(c(2, 6, 10), width = "0.3cm") %>%
+  column_spec(18, width = "0.6cm") %>% 
+  row_spec(12, hline_after = TRUE) %>% 
+  landscape() %>% 
+  as_image()
+```
+
+```{r latex table}
+kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep("r", times = 19)), linesep = "", caption = "Unstandardized path coefficients from structural equation model using positive and negative affectivity to predict depression with savoring subscales as mediators ($N$ = 1,680)") %>%
   kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
   add_header_above(c(" ", " ", "$M_1$(ANT)" = 3, " ", "$M_2$(MOM)" = 3, " ", "$M_3$(REM)" = 3, " ", "$Y(DEP)$" = 3, " ", "Indirect Effects" = 2), escape = FALSE) %>% 
   add_indent(c(2:4, 6:8)) %>% 
