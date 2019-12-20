@@ -63,7 +63,7 @@ rsquare_dep <- sprintf("%.3f", summary(dep_model)$r.squared)
 
 ```{r anticipating results}
 # name of antecedents
-ant <- tibble(ant = c("$X$(PA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "$X$(NA)", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "$C_{1}$(SEX)", "$C_{2}$(WOR)", "$C_{3}$(ANX)", "Intercept", "$R^2$", "$F$", "$p$"))
+ant <- tibble(ant = c("PA", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "NA", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "SEX", "WOR", "ANX", "Intercept", "$R^2$", "$F$", "$p$"))
 
 # path coefficients 
 m1_coef <- c(
