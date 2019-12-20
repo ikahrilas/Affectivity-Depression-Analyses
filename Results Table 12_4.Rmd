@@ -665,7 +665,57 @@ ind_coef <- c(
   " "
 )
 # indirect confidence intervals
-ind_ci <- c("---",
+ind_ci_lower <- c("---",
+            paste0("[", 
+                   parms %>%
+                    filter(rhs == "a3*b3") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", "),
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "a2*b2") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", "),
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "a1*b1") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", "),
+            "---",
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "aiii*b3") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", "),
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "aii*b2") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", "),
+            paste0("[",
+                  parms %>%
+                    filter(rhs == "ai*b1") %>% 
+                    select(ci.lower) %>% 
+                    pull() %>% 
+                    round(digits = 3),
+                  ", "),
+            rep("---", times = 3),
+            " ",
+            " ",
+            " "
+          )
+
+ind_ci_lower <- c("---",
             paste0("[", 
                    parms %>%
                     filter(rhs == "a3*b3") %>% 
@@ -756,43 +806,10 @@ results_ind <- tibble(
   `95% CI` = ind_ci)
 ```
 
-#```{r creating functions to add text padding so that decimal points align}
-# adds padding to coefficients column
-coef_pad <- function(x) {
-  map_chr(x$Coef., ~
-          if_else(str_detect(.x, "-"), 
-                  .x, 
-                  str_pad(.x, width = 6, side = "left")
-                  )
-        )
-}
-# adds padding to p-value column
-p_pad <- function(x) {
-  map_chr(x$p, ~
-          if_else(str_detect(.x, "0\\."),
-                  str_pad(.x, width = 6, side = "left"),
-                  .x
-                  )
-        )
-}
-#```
-
 ```{r replace p values}
 results_m1[10, 3] <- "<.006"
 results_m3[10, 3] <- "<.088"
 ```
-
-#```{r add padding to columns using defined functions}
-results_m1$Coef. <- coef_pad(results_m1)
-results_m1$p <- p_pad(results_m1)
-results_m2$Coef. <- coef_pad(results_m2)
-results_m2$p <- p_pad(results_m2)
-results_m3$Coef. <- coef_pad(results_m3)
-results_m3$p <- p_pad(results_m3)
-results_dep$Coef. <- coef_pad(results_dep)
-results_dep$p <- p_pad(results_dep)
-#```
-
 
 ```{r merge all results together into a single tibble}
 paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), rep(" ", 3)))
@@ -831,7 +848,7 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   add_header_above(c(" ", "$M_1$(ANT)" = 4, "$M_2$(MOM)" = 4, "$M_3$(REM)" = 4, "$Y(DEP)$" = 4, "Indirect Effects" = 3), escape = FALSE) %>% 
   add_indent(c(2:4, 6:8)) %>% 
   pack_rows("Covariates:", 9, 11) %>% 
-  footnote(general = "$SE$ = Standard Error, PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
+  footnote(general = "$SE$ = Standard Error, PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE, escape = FALSE) %>%
   row_spec(0, align = "c") %>% 
   column_spec(c(2, 6, 10), width = "0.3cm") %>%
   column_spec(18, width = "0.6cm") %>% 
