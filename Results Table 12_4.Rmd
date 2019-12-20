@@ -731,7 +731,7 @@ ind_ci <- c("---",
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ", ",
+                  ",  ",
                   parms %>%
                     filter(rhs == "a3*b3") %>% 
                     select(ci.upper) %>% 
@@ -744,7 +744,7 @@ ind_ci <- c("---",
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ", ",
+                  ",   ",
                   parms %>%
                     filter(rhs == "a2*b2") %>% 
                     select(ci.upper) %>% 
@@ -757,7 +757,7 @@ ind_ci <- c("---",
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ", ",
+                  ",  ",
                   parms %>%
                     filter(rhs == "a1*b1") %>% 
                     select(ci.upper) %>% 
@@ -771,7 +771,7 @@ ind_ci <- c("---",
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ", ",
+                  ",  ",
                   parms %>% 
                     filter(rhs == "aiii*b3") %>% 
                     select(ci.upper) %>% 
@@ -784,7 +784,7 @@ ind_ci <- c("---",
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ", ",
+                  ",   ",
                   parms %>% 
                     filter(rhs == "aii*b2") %>% 
                     select(ci.upper) %>% 
@@ -797,7 +797,7 @@ ind_ci <- c("---",
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ", ",
+                  ",  ",
                   parms %>% 
                     filter(rhs == "ai*b1") %>% 
                     select(ci.upper) %>% 
@@ -809,12 +809,13 @@ ind_ci <- c("---",
             " ",
             " "
           )
+
 results_ind <- tibble(
   Coef. = ind_coef,
   `95% CI` = ind_ci)
 ```
 
-```{r creating functions to add text padding so that decimal points align}
+#```{r creating functions to add text padding so that decimal points align}
 # adds padding to coefficients column
 coef_pad <- function(x) {
   map_chr(x$Coef., ~
@@ -833,14 +834,14 @@ p_pad <- function(x) {
                   )
         )
 }
-```
+#```
 
 ```{r replace some p values as per Fred's request}
 results_m1[10, 3] <- "<.006"
 results_m3[10, 3] <- "<.088"
 ```
 
-```{r add padding to columns using defined functions}
+#```{r add padding to columns using defined functions}
 results_m1$Coef. <- coef_pad(results_m1)
 results_m1$p <- p_pad(results_m1)
 results_m2$Coef. <- coef_pad(results_m2)
@@ -849,7 +850,7 @@ results_m3$Coef. <- coef_pad(results_m3)
 results_m3$p <- p_pad(results_m3)
 results_dep$Coef. <- coef_pad(results_dep)
 results_dep$p <- p_pad(results_dep)
-```
+#```
 
 
 ```{r merge all results together into a single tibble}
@@ -881,6 +882,7 @@ names(results_total) <- c("Antecedent",
                           "Coef.",
                           "95\\% bcCI"
                           )
+
 ```
 
 ```{r latex table}
@@ -888,6 +890,7 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
   add_header_above(c(" ", " ", "$M_1$(ANT)" = 3, " ", "$M_2$(MOM)" = 3, " ", "$M_3$(REM)" = 3, " ", "$Y(DEP)$" = 3, " ", "Indirect Effects" = 2), escape = FALSE) %>% 
   add_indent(c(2:4, 6:8)) %>% 
+  pack_rows("Covariates:", 9, 11) %>% 
   footnote(general = "$SE$ = Standard Error, PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
   column_spec(c(2, 6, 10), width = "0.3cm") %>%
   column_spec(18, width = "0.6cm") %>% 
