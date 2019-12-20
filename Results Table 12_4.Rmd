@@ -665,7 +665,7 @@ ind_coef <- c(
   " "
 )
 # indirect confidence intervals
-ind_ci_lower <- c("--------",
+ind_ci_lower <- c("---------",
             paste0("[", 
                    parms %>%
                     filter(rhs == "a3*b3") %>% 
@@ -687,7 +687,7 @@ ind_ci_lower <- c("--------",
                     pull() %>% 
                     round(digits = 3),
                   ","),
-            "--------",
+            "---------",
             paste0("[",
                   parms %>%
                     filter(rhs == "aiii*b3") %>% 
@@ -709,7 +709,7 @@ ind_ci_lower <- c("--------",
                     pull() %>% 
                     round(digits = 3),
                   ","),
-            rep("--------", times = 3),
+            rep("---------", times = 3),
             " ",
             " ",
             " "
