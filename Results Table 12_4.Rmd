@@ -72,17 +72,17 @@ m1_coef <- c(
     select(est) %>%
     pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
      filter(lhs == "anticipating", rhs == "masq_na") %>%
      select(est) %>%
      pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
     filter(lhs == "anticipating", rhs == "sex") %>%
     select(est) %>%
@@ -109,17 +109,17 @@ m1_se <- c(
     select(se) %>%
     pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
      filter(lhs == "anticipating", rhs == "masq_na") %>%
      select(se) %>%
      pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
     filter(lhs == "anticipating", rhs == "sex") %>%
     select(se) %>%
@@ -178,7 +178,7 @@ m1_p <- c(
 )
 
 m1_p[!is.na(m1_p) & m1_p < .001] <- "<.001"
-m1_p[is.na(m1_p)] <- "---"
+m1_p[is.na(m1_p)] <- "--------"
 m1_p[m1_p == 999] <- " "
 
 # results for anticipating
@@ -197,17 +197,17 @@ m2_coef <- c(
     select(est) %>%
     pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
      filter(lhs == "savoring_moment", rhs == "masq_na") %>%
      select(est) %>%
      pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
     filter(lhs == "savoring_moment", rhs == "sex") %>%
     select(est) %>%
@@ -234,17 +234,17 @@ m2_se <- c(
     select(se) %>%
     pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
      filter(lhs == "savoring_moment", rhs == "masq_na") %>%
      select(se) %>%
      pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
     filter(lhs == "savoring_moment", rhs == "sex") %>%
     select(se) %>%
@@ -301,7 +301,7 @@ m2_p <- c(
   999
 )
 m2_p[!is.na(m2_p) & m2_p < .001] <- "<.001"
-m2_p[is.na(m2_p)] <- "---"
+m2_p[is.na(m2_p)] <- "--------"
 m2_p[m2_p == 999] <- " "
 # results table
 results_m2 <- tibble(
@@ -319,16 +319,16 @@ m3_coef <- c(
     select(est) %>%
     pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   sprintf("%.3f", parms %>%
      filter(lhs == "reminiscing", rhs == "masq_na") %>%
      select(est) %>%
      pull()),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
     filter(lhs == "reminiscing", rhs == "sex") %>%
     select(est) %>%
@@ -355,16 +355,16 @@ m3_se <- c(
     select(se) %>%
     pull() %>%
     round(digits = 3),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   sprintf("%.3f", parms %>%
      filter(lhs == "reminiscing", rhs == "masq_na") %>%
      select(se) %>%
      pull()),
-  "---",
-  "---",
-  "---",
+  "--------",
+  "--------",
+  "--------",
   parms %>%
     filter(lhs == "reminiscing", rhs == "sex") %>%
     select(se) %>%
@@ -422,7 +422,7 @@ m3_p <- c(
   999
 )
 m3_p[!is.na(m3_p) & m3_p < .001] <- "<.001"
-m3_p[is.na(m3_p)] <- "---"
+m3_p[is.na(m3_p)] <- "--------"
 m3_p[m3_p == 999] <- " "
 # results
 results_m3 <- tibble(
@@ -616,7 +616,7 @@ dep_p <- c(
   999
 )
 dep_p[!is.na(dep_p) & dep_p < .001] <- "<.001"
-dep_p[is.na(dep_p)] <- "---"
+dep_p[is.na(dep_p)] <- "--------"
 dep_p[dep_p == 999] <- " "
 # results
 results_dep <- tibble(Coef. = dep_coef,
@@ -627,7 +627,7 @@ results_dep <- tibble(Coef. = dep_coef,
 ```{r indirect effects}
 # indirect effect coefficients
 ind_coef <- c(
-  "---",
+  "--------",
   parms %>% 
     filter(rhs == "a3*b3") %>% 
     select(est) %>% 
@@ -643,7 +643,7 @@ ind_coef <- c(
     select(est) %>%
     pull() %>% 
     round(digits = 3),
-  "---",
+  "--------",
   parms %>% 
     filter(rhs == "aiii*b3") %>% 
     select(est) %>% 
@@ -659,7 +659,7 @@ ind_coef <- c(
     select(est) %>% 
     pull() %>% 
     round(digits = 3),
-  rep("---", times = 3),
+  rep("--------", times = 3),
   " ",
   " ",
   " "
@@ -687,7 +687,7 @@ ind_ci_lower <- c("---",
                     pull() %>% 
                     round(digits = 3),
                   ","),
-            "---",
+            "--------",
             paste0("[",
                   parms %>%
                     filter(rhs == "aiii*b3") %>% 
@@ -709,13 +709,13 @@ ind_ci_lower <- c("---",
                     pull() %>% 
                     round(digits = 3),
                   ","),
-            rep("---", times = 3),
+            rep("--------", times = 3),
             " ",
             " ",
             " "
           )
 
-ind_ci_upper <- c("---",
+ind_ci_upper <- c("--------",
             paste0(parms %>%
                     filter(rhs == "a3*b3") %>% 
                     select(ci.upper) %>% 
@@ -734,7 +734,7 @@ ind_ci_upper <- c("---",
                     pull() %>%
                     round(digits = 3),
                   "]"),
-            "---",
+            "--------",
             paste0(parms %>% 
                     filter(rhs == "aiii*b3") %>% 
                     select(ci.upper) %>% 
@@ -753,7 +753,7 @@ ind_ci_upper <- c("---",
                     pull() %>% 
                     round(digits = 3),
                   "]"),
-            rep("---", times = 3),
+            rep("--------", times = 3),
             " ",
             " ",
             " "
