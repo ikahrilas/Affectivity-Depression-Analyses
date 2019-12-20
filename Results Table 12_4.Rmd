@@ -63,7 +63,7 @@ rsquare_dep <- sprintf("%.3f", summary(dep_model)$r.squared)
 
 ```{r anticipating results}
 # name of antecedents
-ant <- tibble(ant = c("PA", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "NA", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "SEX", "WOR", "ANX", "Intercept", "$R^2$", "$F$", "$p$"))
+ant <- tibble(ant = c("PA", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)", "NA", "$M_{1}$(ANT)", "$M_{2}$(MOM)", "$M_{3}$(REM)",             "SEX", "WOR", "ANX", "$R^2$", "$F$", "$p$"))
 
 # path coefficients 
 m1_coef <- c(
@@ -97,11 +97,6 @@ m1_coef <- c(
      filter(lhs == "anticipating", rhs == "masq_aa") %>%
      select(est) %>%
      pull() %>%
-    round(digits = 3),
-  parms %>%
-    filter(lhs == "anticipating", op == "~1") %>%
-    select(est) %>%
-    pull() %>%
     round(digits = 3),
   " ",
   " ",
@@ -140,11 +135,6 @@ m1_se <- c(
      select(se) %>%
      pull() %>%
     round(digits = 3),
-  parms %>%
-    filter(lhs == "anticipating", op == "~1") %>%
-    select(se) %>%
-    pull() %>%
-    round(digits = 3),
   rsquare_ant,
   f_ant,
   "<.001"
@@ -181,11 +171,6 @@ m1_p <- c(
      filter(lhs == "anticipating", rhs == "masq_aa") %>%
      select(pvalue) %>%
      pull() %>%
-    round(digits = 3),
-  parms %>%
-    filter(lhs == "anticipating", op == "~1") %>%
-    select(pvalue) %>%
-    pull() %>%
     round(digits = 3),
   999,
   999,
@@ -238,11 +223,6 @@ m2_coef <- c(
      select(est) %>%
      pull() %>%
     round(digits = 3),
-  parms %>%
-    filter(lhs == "savoring_moment", op == "~1") %>%
-    select(est) %>%
-    pull() %>%
-    round(digits = 3),
   " ",
   " ",
   " "
@@ -278,11 +258,6 @@ m2_se <- c(
      filter(lhs == "savoring_moment", rhs == "masq_aa") %>%
      select(se) %>%
      pull() %>%
-    round(digits = 3),
-  parms %>%
-    filter(lhs == "savoring_moment", op == "~1") %>%
-    select(se) %>%
-    pull() %>%
     round(digits = 3),
   rsquare_mom,
   f_mom, 
@@ -320,11 +295,6 @@ m2_p <- c(
      filter(lhs == "savoring_moment", rhs == "masq_aa") %>%
      select(pvalue) %>%
      pull() %>%
-    round(digits = 3),
-  parms %>%
-    filter(lhs == "savoring_moment", op == "~1") %>%
-    select(pvalue) %>%
-    pull() %>%
     round(digits = 3),
   999,
   999,
@@ -374,11 +344,6 @@ m3_coef <- c(
      select(est) %>%
      pull() %>%
     round(digits = 3),
-  parms %>%
-    filter(lhs == "reminiscing", op == "~1") %>%
-    select(est) %>%
-    pull() %>%
-    round(digits = 3),
   " ",
   " ",
   " "
@@ -414,11 +379,6 @@ m3_se <- c(
      filter(lhs == "reminiscing", rhs == "masq_aa") %>%
      select(se) %>%
      pull() %>%
-    round(digits = 3),
-  parms %>%
-    filter(lhs == "reminiscing", op == "~1") %>%
-    select(se) %>%
-    pull() %>%
     round(digits = 3),
   rsquare_rem,
   f_rem,
@@ -456,11 +416,6 @@ m3_p <- c(
      filter(lhs == "reminiscing", rhs == "masq_aa") %>%
      select(pvalue) %>%
      pull() %>%
-    round(digits = 3),
-  parms %>%
-    filter(lhs == "reminiscing", op == "~1") %>%
-    select(pvalue) %>%
-    pull() %>%
     round(digits = 3),
   999,
   999,
@@ -535,10 +490,6 @@ dep_coef <- c(
      select(est) %>%
      pull() %>%
     round(digits = 3),
-  sprintf("%.3f", parms %>%
-    filter(lhs == "phq_total", op == "~1") %>%
-    select(est) %>%
-    pull()),
   " ",
   " ",
   " "
@@ -598,11 +549,6 @@ dep_se <- c(
      filter(lhs == "phq_total", rhs == "masq_aa") %>%
      select(se) %>%
      pull() %>%
-    round(digits = 3),
-  parms %>%
-    filter(lhs == "phq_total", op == "~1") %>%
-    select(se) %>%
-    pull() %>%
     round(digits = 3),
   rsquare_dep,
   f_dep,
@@ -665,11 +611,6 @@ dep_p <- c(
      select(pvalue) %>%
      pull() %>%
     round(digits = 3),
-  parms %>%
-    filter(lhs == "phq_total", op == "~1") %>%
-    select(pvalue) %>%
-    pull() %>%
-    round(digits = 3),
   999,
   999,
   999
@@ -718,7 +659,7 @@ ind_coef <- c(
     select(est) %>% 
     pull() %>% 
     round(digits = 3),
-  rep("---", times = 4),
+  rep("---", times = 3),
   " ",
   " ",
   " "
@@ -804,7 +745,7 @@ ind_ci <- c("---",
                     pull() %>% 
                     round(digits = 3),
                   "]"),
-            rep("---", times = 4),
+            rep("---", times = 3),
             " ",
             " ",
             " "
@@ -836,7 +777,7 @@ p_pad <- function(x) {
 }
 #```
 
-```{r replace some p values as per Fred's request}
+```{r replace p values}
 results_m1[10, 3] <- "<.006"
 results_m3[10, 3] <- "<.088"
 ```
@@ -854,11 +795,11 @@ results_dep$p <- p_pad(results_dep)
 
 
 ```{r merge all results together into a single tibble}
-paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), "$i_{M_1}$", rep(" ", 3)))
-paths_2 <- tibble(" " = c("$a_2$", rep(" ", 3), "$a_{ii}$", rep(" ", 6), "$i_{M_2}$", rep(" ", 3)))
-paths_3 <- tibble(" " = c("$a_3$", rep(" ", 3), "$a_{iii}$", rep(" ", 6), "$i_{M_3}$", rep(" ", 3)))
-paths_dep <- tibble(" " = c("$c'_{PA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", "$c'_{NA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", rep(" ", 3), "$i_{Y}$", rep(" ", 3)))
-paths_ind <- tibble(" " = c(" ", "$a_{1}b_{1}$", "$a_{2}b_{2}$", "$a_{3}b_{3}$", " ", "$a_{i}b_{1}$", "$a_{ii}b_{2}$", "$a_{iii}b_{3}$", rep(" ", 7)))
+paths_1 <- tibble(" " = c("$a_1$", rep(" ", 3), "$a_i$", rep(" ", 6), rep(" ", 3)))
+paths_2 <- tibble(" " = c("$a_2$", rep(" ", 3), "$a_{ii}$", rep(" ", 6), rep(" ", 3)))
+paths_3 <- tibble(" " = c("$a_3$", rep(" ", 3), "$a_{iii}$", rep(" ", 6), rep(" ", 3)))
+paths_dep <- tibble(" " = c("$c'_{PA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", "$c'_{NA}$", "$b_{1}$", "$b_{2}$", "$b_{3}$", rep(" ", 3), rep(" ", 3)))
+paths_ind <- tibble(" " = c(" ", "$a_{1}b_{1}$", "$a_{2}b_{2}$", "$a_{3}b_{3}$", " ", "$a_{i}b_{1}$", "$a_{ii}b_{2}$", "$a_{iii}b_{3}$", rep(" ", 6)))
 
 results_total <- bind_cols(ant, paths_1, results_m1, paths_2, results_m2, paths_3, results_m3, paths_dep, results_dep, paths_ind, results_ind)
 names(results_total) <- c("Antecedent",
@@ -894,7 +835,7 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   footnote(general = "$SE$ = Standard Error, PA = Positive Affectivity, NA = Negative Affectivity, ANT = Anticipating, MOM = Savoring the Moment, REM = Reminiscing, DEP = Depression, WOR = Worry, ANX = Anxious Arousal.", threeparttable = TRUE) %>%
   column_spec(c(2, 6, 10), width = "0.3cm") %>%
   column_spec(18, width = "0.6cm") %>% 
-  row_spec(12, hline_after = TRUE) %>% 
+  row_spec(11, hline_after = TRUE) %>% 
   landscape() %>% 
   as_image()
 ```
