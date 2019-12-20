@@ -666,49 +666,37 @@ ind_coef <- c(
 )
 # indirect confidence intervals
 ind_ci_lower <- c("---------",
-            paste0("[", 
                    parms %>%
                     filter(rhs == "a3*b3") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ","),
-            paste0("[",
                   parms %>%
                     filter(rhs == "a2*b2") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ","),
-            paste0("[",
                   parms %>%
                     filter(rhs == "a1*b1") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ","),
             "---------",
-            paste0("[",
                   parms %>%
                     filter(rhs == "aiii*b3") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ","),
-            paste0("[",
                   parms %>%
                     filter(rhs == "aii*b2") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ","),
-            paste0("[",
                   parms %>%
                     filter(rhs == "ai*b1") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  ","),
             rep("---------", times = 3),
             " ",
             " ",
@@ -716,47 +704,41 @@ ind_ci_lower <- c("---------",
           )
 
 ind_ci_upper <- c("--------",
-            paste0(parms %>%
+                  parms %>%
                     filter(rhs == "a3*b3") %>% 
                     select(ci.upper) %>% 
                     pull() %>%
                     round(digits = 3),
-                  "]"),
-            paste0(parms %>%
+                  parms %>%
                     filter(rhs == "a2*b2") %>% 
                     select(ci.upper) %>% 
                     pull() %>%
                     round(digits = 3),
-                  "]"),
-            paste0(parms %>%
+                  parms %>%
                     filter(rhs == "a1*b1") %>% 
                     select(ci.upper) %>% 
                     pull() %>%
                     round(digits = 3),
-                  "]"),
-            "--------",
-            paste0(parms %>% 
+                  "--------",
+                  parms %>% 
                     filter(rhs == "aiii*b3") %>% 
                     select(ci.upper) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  "]"),
-            paste0(parms %>% 
+                  parms %>% 
                     filter(rhs == "aii*b2") %>% 
                     select(ci.upper) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  "]"),
-            paste0(parms %>% 
+                  parms %>% 
                     filter(rhs == "ai*b1") %>% 
                     select(ci.upper) %>% 
                     pull() %>% 
                     round(digits = 3),
-                  "]"),
-            rep("--------", times = 3),
-            " ",
-            " ",
-            " "
+                  rep("--------", times = 3),
+                  " ",
+                  " ",
+                  " "
           )
 
 results_ind <- tibble(
