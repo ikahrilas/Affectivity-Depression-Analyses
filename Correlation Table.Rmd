@@ -32,5 +32,7 @@ Create correlation matrix.
 ```{r correlation matrix}
 # data frame must be converted to matrix type for function to work.
 rcorr(as.matrix(sad_data_int))
+# for additional decimals
+cor(as.matrix(sad_data_int))
 ```
 
