@@ -8,14 +8,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Load packages
-```{r load tidyverse and hmisc}
+```{r load tidyverse and hmisc, message = FALSE}
 library(tidyverse)
 library(Hmisc) # install.packages("Hmisc")
 ```
 
 Load in data.
 
-```{r load in data}
+```{r load in data, message = FALSE, warning = FALSE}
 sad_data <- read_csv("total_data.csv")
 ```
 
