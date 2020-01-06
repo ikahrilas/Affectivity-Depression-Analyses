@@ -665,7 +665,7 @@ ind_coef <- c(
   " "
 )
 # indirect confidence intervals
-ind_ci_lower <- c("---------",
+ind_ci_lower <- c("--------",
                    parms %>%
                     filter(rhs == "a3*b3") %>% 
                     select(ci.lower) %>% 
@@ -681,7 +681,7 @@ ind_ci_lower <- c("---------",
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-            "---------",
+            "--------",
                   parms %>%
                     filter(rhs == "aiii*b3") %>% 
                     select(ci.lower) %>% 
@@ -697,7 +697,7 @@ ind_ci_lower <- c("---------",
                     select(ci.lower) %>% 
                     pull() %>% 
                     round(digits = 3),
-            rep("---------", times = 3),
+            rep("--------", times = 3),
             " ",
             " ",
             " "
@@ -786,16 +786,12 @@ names(results_total) <- c("Antecedent",
 
 ```{r latex table}
 kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep(c("c", "r", "c", "r"), 4), "c", "r", "r", "r"), linesep = "") %>%
-  kable_styling(latex_options = c("hold_position", "scale_down")) %>% 
+  kable_styling(font_size = 14, latex_options = c("scale_down")) %>% 
   add_header_above(c(" ", "$M_1$(ANT)" = 4, "$M_2$(MOM)" = 4, "$M_3$(REM)" = 4, "$Y$(DEP)" = 4, " ", " ", "95\\\\% bcCI" = 2), escape = FALSE) %>% 
   add_header_above(c(rep(" ", 17), "Indirect Effects" = 4), bold = TRUE, italic = TRUE) %>% 
   add_indent(c(2:4, 6:8)) %>% 
   pack_rows("Covariates:", 9, 11) %>% 
   row_spec(0, align = "c") %>% 
-  column_spec(c(2, 6, 10), width = "0.3cm") %>%
-  column_spec(18, width = "0.6cm") %>% 
-  column_spec(20, width = "1.12cm") %>% 
-  column_spec(21, width = "1.02cm") %>% 
   row_spec(11, hline_after = TRUE) %>% 
   landscape() %>% 
   as_image()
