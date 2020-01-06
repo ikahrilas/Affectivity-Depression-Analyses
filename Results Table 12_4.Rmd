@@ -786,7 +786,7 @@ names(results_total) <- c("Antecedent",
 
 ```{r latex table}
 kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", rep(c("c", "r", "c", "r"), 4), "c", "r", "r", "r"), linesep = "") %>%
-  kable_styling(font_size = 14, latex_options = c("scale_down")) %>% 
+  kable_styling(font_size = 24, latex_options = c("scale_down")) %>% 
   add_header_above(c(" ", "$M_1$(ANT)" = 4, "$M_2$(MOM)" = 4, "$M_3$(REM)" = 4, "$Y$(DEP)" = 4, " ", " ", "95\\\\% bcCI" = 2), escape = FALSE) %>% 
   add_header_above(c(rep(" ", 17), "Indirect Effects" = 4), bold = TRUE, italic = TRUE) %>% 
   add_indent(c(2:4, 6:8)) %>% 
