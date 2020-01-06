@@ -27,3 +27,10 @@ sad_data_int <- sad_data %>%
   select(var_int)
 ```
 
+Create correlation matrix.
+
+```{r correlation matrix}
+# data frame must be converted to matrix type for function to work.
+rcorr(as.matrix(sad_data_int))
+```
+
