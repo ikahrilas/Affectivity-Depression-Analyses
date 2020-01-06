@@ -1,0 +1,29 @@
+---
+title: "Correlation table"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load packages
+```{r load tidyverse and hmisc}
+library(tidyverse)
+library(Hmisc) # install.packages("Hmisc")
+```
+
+Load in data.
+
+```{r load in data}
+sad_data <- read_csv("total_data.csv")
+```
+
+Retain only those variables required to match the correlation matrix in the original manuscript.
+
+```{r filter variables of dataset}
+var_int <- c("anticipating", "savoring_moment", "reminiscing", "masq_pa", "masq_na", "masq_aa", "phq_total", "pswq_total")
+sad_data_int <- sad_data %>% 
+  select(var_int)
+```
+
