@@ -65,3 +65,13 @@ sad_rsquare <- lavInspect(fit, "rsquare")
 # save parameter dataframe to working directory so that it can be accessed in the table compiler script.
 write_csv(parms, "parms.csv")
 ```
+
+```{r multivariate regressions}
+# the following package adds standardized regression coefficients to lm output
+library(lm.beta) # install.packages("lm.beta")
+# multiple regression to establish individual relations between PA, NA, and AA with depression
+multi_mod <- lm(phq_total ~ masq_pa + masq_na + masq_aa, data = sad_data_int)
+summary(multi_mod)
+lm.beta(multi_mod)
+```
+
