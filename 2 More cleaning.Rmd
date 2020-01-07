@@ -68,7 +68,7 @@ map_dbl(sad_data, ~ {
   (sum(is.na(.x))/sum(!is.na(.x))) * 100
   })
 ```
-This is good news - it appears that no more than %3.75 of any variable is missing, so we had a pretty good response rate. Since we have such a large N, we can just omit all cases that have missing values.
+This is good news - it appears that no more than %5.70 of any variable is missing, so we had a pretty good response rate. Since we have such a large N, we can just omit all cases that have missing values.
 
 ```{r omit all cases with missing values}
 sad_data <- na.omit(sad_data)
@@ -82,5 +82,16 @@ map_dbl(sad_data, ~ {
 
 ```{r load data in workspace, include = FALSE}
 write_csv(sad_data, "total_data.csv")
+```
+
+```{r code for finding percentage that each race and ethnicity comprises of the final sample}
+# race
+map_dbl(table(sad_data$race), ~{
+  .x / nrow(sad_data) * 100
+})
+# ethnicity
+map_dbl(table(sad_data$ethnicity), ~ {
+  .x / nrow(sad_data) * 100
+})
 ```
 
