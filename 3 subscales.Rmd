@@ -6,6 +6,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 sad_data <- read_csv("total_data.csv")
+# for deriving reliability coefficients
+library(MBESS) #install.packages("MBESS")
 ```
 
 Reverse score SBI itmes. Items are a 7-item likert scale, so subtract each score from 8.
@@ -26,7 +28,6 @@ for (i in seq_along(sbi_rev_items)) {
 
 Derive SBI subscales of anticipating, savoring the moment, and anticipating by averaging the appropriate items.
 
-
 ```{r SBI subscales}
 #establish variable containing the number of items in each average, which is 8.
 sbi_sub_n_items <- 8
@@ -41,6 +42,20 @@ sad_data <- sad_data %>%
          reminiscing  = (sbi_3 + sbi_9 + sbi_15 + sbi_21 + sbi_6_r + sbi_12_r + sbi_18_r + sbi_24_r),
          sbi_tot = (sbi_1 + sbi_7 + sbi_13 + sbi_19 + sbi_4_r + sbi_10_r + sbi_16_r + sbi_22_r + sbi_5 + sbi_11 + sbi_17 + sbi_23 + sbi_2_r + sbi_8_r + sbi_14_r + sbi_20_r + sbi_3 + sbi_9 + sbi_15 + sbi_21 + sbi_6_r + sbi_12_r + sbi_18_r + sbi_24_r) 
          )
+
+# derive Macdonald's Omega for each subscale
+anticipating_items <- c("sbi_1", "sbi_7", "sbi_13", "sbi_19", "sbi_4_r", "sbi_10_r", "sbi_16_r", "sbi_22_r")
+moment_items <- c("sbi_5", "sbi_11", "sbi_17", "sbi_23", "sbi_2_r", "sbi_8_r", "sbi_14_r", "sbi_20_r")
+reminiscing_items <- c("sbi_3", "sbi_9", "sbi_15", "sbi_21", "sbi_6_r", "sbi_12_r", "sbi_18_r", "sbi_24_r")
+
+items <- list(select(sad_data, anticipating_items), 
+              select(sad_data, moment_items), 
+              select(sad_data, reminiscing_items)
+)
+
+map(items, ~{
+  ci.reliability(.x, type = "omega")
+})
 ```
 
 Derive positive affectivity, negative affectivity, and anxious arousal MASQ subscales, which are derived by simply summing select items
@@ -70,5 +85,10 @@ sad_data <- sad_data %>%
 
 ```{r, include = FALSE}
 write_csv(sad_data, "total_data.csv")
+```
+
+```{r calculate Macdonald's omega for subscales}
+
+ci.reliability(data = sad_data %>% select(contains("pswq")), type = "omega")
 ```
 
