@@ -58,11 +58,30 @@ sad_data_severity <- sad_data_int %>%
   mutate("severity" = if_else(phq_total > 20, "Severe", 
                               if_else(phq_total > 15, "Moderately Severe",
                                       if_else(phq_total > 10, "Moderate",
-                                              if_else(phq_total > 5, "Mild", "Minimal")
+                                              if_else(between(phq_total, 5, 9), "Mild", "a_Minimal")
                                              )
                                       )
                               )
          )
 
+sad_data_severity %>%
+  split(.$severity) %>% 
+  map_dbl(~ {
+    nrow(.x)
+    })
+
+sad_data_severity %>%
+  split(.$severity) %>% 
+  map_dbl(~ {
+    round(nrow(.x) / nrow(sad_data_severity) * 100, digits = 2)
+    })
+
+sad_data_severity %>% 
+  split(.$severity) %>% 
+  map_df(~ {
+    mean(.x$masq_pa)
+  })
+
+invoke_map(list(nrow, mean, sd), 
 ```
 
