@@ -68,51 +68,67 @@ sad_data_severity <- sad_data %>%
 ```{r create data frame for n, percent, mean, and sd for each variable}
 n <- sad_data_severity %>%
   split(.$severity) %>% 
-  map_dbl(~ {
+  map_df(~ {
     nrow(.x)
-    })
+    }) %>% 
+  mutate(header = "n") %>% 
+  select(header, everything())
 
 percent <- sad_data_severity %>%
   split(.$severity) %>% 
-  map_dbl(~ {
+  map_df(~ {
     "n" = round(nrow(.x) / nrow(sad_data_severity) * 100, digits = 2)
-    })
+    }) %>% 
+  mutate(header = "\\\\%") %>% 
+  select(header, everything())
 
 mean_pa <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ {
     round(mean(.x$masq_pa), digits = 2)
-  })
+  }) %>% 
+  mutate(header = "PA Mean") %>% 
+  select(header, everything())
 
 sd_pa <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ { 
     round(sd(.x$masq_pa), digits = 2)
-    })
+    }) %>% 
+  mutate(header = "PA SD") %>% 
+  select(header, everything())
 
 mean_na <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ {
     round(mean(.x$masq_na), digits = 2)
-  })
+  }) %>% 
+  mutate(header = "NA Mean") %>% 
+  select(header, everything())
 
 sd_na <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ { 
     round(sd(.x$masq_na), digits = 2)
-    })
+    }) %>% 
+  mutate(header = "NA SD") %>% 
+  select(header, everything())
 
 mean_stm <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ {
     round(mean(.x$savoring_moment), digits = 2)
-  })
+  }) %>% 
+  mutate(header = "StM Mean") %>% 
+  select(header, everything())
 
 sd_stm <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ { 
     round(sd(.x$savoring_moment), digits = 2)
-    })
+    }) %>% 
+  mutate(header = "StM SD") %>% 
+  select(header, everything())
 ```
 
 ```{r now derive macdonald's omega for each partitioned group}
@@ -122,7 +138,7 @@ na_items <- c("masq_9", "masq_13", "masq_17", "masq_21", "masq_29", "masq_30", "
 moment_items <- c("sbi_5", "sbi_11", "sbi_17", "sbi_23", "sbi_2_r", "sbi_8_r", "sbi_14_r", "sbi_20_r")
 
 # list of depression groups to be used with map functions
-dep_groups <- list(Minimal = "a_Minimal",
+dep_groups <- list(a_Minimal = "a_Minimal",
                    Mild = "Mild",
                    Moderate = "Moderate",
                    `Moderately Severe` = "Moderately Severe",
@@ -149,5 +165,17 @@ map(dep_groups, ~ round(omega(.x, items)$est, digits = 2))
 
 # run the function
 dep_group_omega <- map_df(all_items, ~ cool(.x))
+
+dep_group_omega <- dep_group_omega %>% 
+  mutate(header = c("PA $\\\\omega$",
+                 "NA $\\\\omega$",
+                 "StM $\\\\omega$")
+  ) %>% 
+  select(header, everything())
+```
+
+```{r merge all data frames together}
+final_df <- bind_rows(n, percent, mean_pa, sd_pa, mean_na, sd_na, mean_stm, sd_stm, dep_group_omega)
+names(final_df)[1:2] <- c(" ", "Minimal")
 ```
 
