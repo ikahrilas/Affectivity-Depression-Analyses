@@ -63,25 +63,55 @@ sad_data_severity <- sad_data_int %>%
                                       )
                               )
          )
+```
 
-sad_data_severity %>%
+```{r create data frame for n, percent, mean, and sd for each variable}
+n <- sad_data_severity %>%
   split(.$severity) %>% 
   map_dbl(~ {
     nrow(.x)
     })
 
-sad_data_severity %>%
+percent <- sad_data_severity %>%
   split(.$severity) %>% 
   map_dbl(~ {
-    round(nrow(.x) / nrow(sad_data_severity) * 100, digits = 2)
+    "n" = round(nrow(.x) / nrow(sad_data_severity) * 100, digits = 2)
     })
 
-sad_data_severity %>% 
+mean_pa <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ {
-    mean(.x$masq_pa)
+    round(mean(.x$masq_pa), digits = 2)
   })
 
-invoke_map(list(nrow, mean, sd), 
+sd_pa <- sad_data_severity %>% 
+  split(.$severity) %>% 
+  map_df(~ { 
+    round(sd(.x$masq_pa), digits = 2)
+    })
+
+mean_na <- sad_data_severity %>% 
+  split(.$severity) %>% 
+  map_df(~ {
+    round(mean(.x$masq_na), digits = 2)
+  })
+
+sd_na <- sad_data_severity %>% 
+  split(.$severity) %>% 
+  map_df(~ { 
+    round(sd(.x$masq_na), digits = 2)
+    })
+
+mean_stm <- sad_data_severity %>% 
+  split(.$severity) %>% 
+  map_df(~ {
+    round(mean(.x$savoring_moment), digits = 2)
+  })
+
+sd_stm <- sd_na <- sad_data_severity %>% 
+  split(.$severity) %>% 
+  map_df(~ { 
+    round(sd(.x$savoring_moment), digits = 2)
+    })
 ```
 
