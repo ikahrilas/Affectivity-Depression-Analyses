@@ -116,23 +116,38 @@ sd_stm <- sad_data_severity %>%
 ```
 
 ```{r now derive macdonald's omega for each partitioned group}
-# derive Macdonald's Omega for each subscale
+# designate items for each variable
 pa_items <- c("masq_2", "masq_4", "masq_5", "masq_7", "masq_11", "masq_14", "masq_19", "masq_23", "masq_26", "masq_28", "masq_32", "masq_34", "masq_36", "masq_37")
 na_items <- c("masq_9", "masq_13", "masq_17", "masq_21", "masq_29", "masq_30", "masq_35", "masq_38")
 moment_items <- c("sbi_5", "sbi_11", "sbi_17", "sbi_23", "sbi_2_r", "sbi_8_r", "sbi_14_r", "sbi_20_r")
 
-min_mom_omega <- sad_data_severity %>%
-  filter(severity == "a_Minimal") %>%
-  select(moment_items) %>% 
-  ci.reliability(., type = "omega")
+# list of depression groups to be used with map functions
+dep_groups <- list(Minimal = "a_Minimal",
+                   Mild = "Mild",
+                   Moderate = "Moderate",
+                   `Moderately Severe` = "Moderately Severe",
+                   Severe = "Severe")
 
-mild_mom_omega <- sad_data_severity %>% 
-  filter(severity == "Mild") %>% 
-  select(moment_items) %>% 
+# define function that calculates omega with severity group and items as arguments
+omega <- function(sev, items) {
+  sad_data_severity %>%
+  filter(severity == sev) %>%
+  select(items) %>% 
   ci.reliability(., type = "omega")
+}
 
-map(items, ~{
-  ci.reliability(.x, type = "omega")
-})
+# make a list of all the groups of items that have to be used to calculate omega
+all_items <- list(pa = pa_items,
+                  na = na_items,
+                  stm = moment_items)
+
+# define another very cool function function that will iterate over the list of items and output a data frame containing macdonald's 
+# omega for each variable partitioned by severity group.
+cool <- function(items) {
+map(dep_groups, ~ round(omega(.x, items)$est, digits = 2))
+}
+
+# run the function
+dep_group_omega <- map_df(all_items, ~ cool(.x))
 ```
 
