@@ -174,8 +174,15 @@ dep_group_omega <- dep_group_omega %>%
   select(header, everything())
 ```
 
-```{r merge all data frames together}
+```{r merge all data frames together and transpose}
 final_df <- bind_rows(n, percent, mean_pa, sd_pa, mean_na, sd_na, mean_stm, sd_stm, dep_group_omega)
-names(final_df)[1:2] <- c(" ", "Minimal")
+names(final_df)[2] <- "Minimal"
+library(data.table)
+df_transpose <- transpose(final_df)
+df_transpose <- df_transpose %>% 
+  mutate("Depression Group" = names(final_df)) %>% 
+  select("Depression Group", everything())
+names(df_transpose) <- c("Depression Group", final_df$header)
+df_table <- df_transpose[-1,]
 ```
 
