@@ -11,6 +11,7 @@ Load packages
 ```{r load tidyverse and hmisc, message = FALSE}
 library(tidyverse)
 library(Hmisc) # install.packages("Hmisc")
+library(MBESS)
 ```
 
 Load in data.
@@ -34,5 +35,34 @@ Create correlation matrix.
 rcorr(as.matrix(sad_data_int))
 # for additional decimals
 cor(as.matrix(sad_data_int))
+```
+
+```{r create empty data frame for descriptive statistics}
+dep_group <- tibble("Depression Group" = c("Minimal", "Mild", "Moderate", "Moderately Severe", "Severe"),
+                    "n" = NA,
+                    "%" = NA,
+                    "PA Mean" = NA,
+                    "PA SD" = NA,
+                    "PA $\\\\omega$" = NA,
+                    "NA Mean" = NA,
+                    "NA SD" = NA,
+                    "NA $\\\\omega$" = NA,
+                    "StM Mean" = NA,
+                    "StM SD" = NA,
+                    "Stm $\\\\omega$" = NA
+                    )
+```
+
+```{r create severity designation variable based on descriptors from Kroenke et al., 2001}
+sad_data_severity <- sad_data_int %>% 
+  mutate("severity" = if_else(phq_total > 20, "Severe", 
+                              if_else(phq_total > 15, "Moderately Severe",
+                                      if_else(phq_total > 10, "Moderate",
+                                              if_else(phq_total > 5, "Mild", "Minimal")
+                                             )
+                                      )
+                              )
+         )
+
 ```
 
