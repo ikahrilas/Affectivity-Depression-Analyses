@@ -54,7 +54,7 @@ dep_group <- tibble("Depression Group" = c("Minimal", "Mild", "Moderate", "Moder
 ```
 
 ```{r create severity designation variable based on descriptors from Kroenke et al., 2001}
-sad_data_severity <- sad_data_int %>% 
+sad_data_severity <- sad_data %>% 
   mutate("severity" = if_else(phq_total > 20, "Severe", 
                               if_else(phq_total > 15, "Moderately Severe",
                                       if_else(phq_total > 10, "Moderate",
@@ -108,10 +108,31 @@ mean_stm <- sad_data_severity %>%
     round(mean(.x$savoring_moment), digits = 2)
   })
 
-sd_stm <- sd_na <- sad_data_severity %>% 
+sd_stm <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ { 
     round(sd(.x$savoring_moment), digits = 2)
     })
+```
+
+```{r now derive macdonald's omega for each partitioned group}
+# derive Macdonald's Omega for each subscale
+pa_items <- c("masq_2", "masq_4", "masq_5", "masq_7", "masq_11", "masq_14", "masq_19", "masq_23", "masq_26", "masq_28", "masq_32", "masq_34", "masq_36", "masq_37")
+na_items <- c("masq_9", "masq_13", "masq_17", "masq_21", "masq_29", "masq_30", "masq_35", "masq_38")
+moment_items <- c("sbi_5", "sbi_11", "sbi_17", "sbi_23", "sbi_2_r", "sbi_8_r", "sbi_14_r", "sbi_20_r")
+
+min_mom_omega <- sad_data_severity %>%
+  filter(severity == "a_Minimal") %>%
+  select(moment_items) %>% 
+  ci.reliability(., type = "omega")
+
+mild_mom_omega <- sad_data_severity %>% 
+  filter(severity == "Mild") %>% 
+  select(moment_items) %>% 
+  ci.reliability(., type = "omega")
+
+map(items, ~{
+  ci.reliability(.x, type = "omega")
+})
 ```
 
