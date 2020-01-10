@@ -1,6 +1,8 @@
 ---
 title: "Descriptive Statistics"
-output: html_document
+output: pdf_document
+ keep_tex: yes
+  latex_engine: xelatex
 ---
 
 ```{r setup, include=FALSE}
@@ -35,22 +37,6 @@ Create correlation matrix.
 rcorr(as.matrix(sad_data_int))
 # for additional decimals
 cor(as.matrix(sad_data_int))
-```
-
-```{r create empty data frame for descriptive statistics}
-dep_group <- tibble("Depression Group" = c("Minimal", "Mild", "Moderate", "Moderately Severe", "Severe"),
-                    "n" = NA,
-                    "%" = NA,
-                    "PA Mean" = NA,
-                    "PA SD" = NA,
-                    "PA $\\\\omega$" = NA,
-                    "NA Mean" = NA,
-                    "NA SD" = NA,
-                    "NA $\\\\omega$" = NA,
-                    "StM Mean" = NA,
-                    "StM SD" = NA,
-                    "Stm $\\\\omega$" = NA
-                    )
 ```
 
 ```{r create severity designation variable based on descriptors from Kroenke et al., 2001}
@@ -177,12 +163,40 @@ dep_group_omega <- dep_group_omega %>%
 ```{r merge all data frames together and transpose}
 final_df <- bind_rows(n, percent, mean_pa, sd_pa, mean_na, sd_na, mean_stm, sd_stm, dep_group_omega)
 names(final_df)[2] <- "Minimal"
-library(data.table)
+library(data.table) # install.packages("data.table")
 df_transpose <- transpose(final_df)
 df_transpose <- df_transpose %>% 
   mutate("Depression Group" = names(final_df)) %>% 
   select("Depression Group", everything())
 names(df_transpose) <- c("Depression Group", final_df$header)
 df_table <- df_transpose[-1,]
+rownames(df_table) <- NULL
+# define the column names in one spot
+names(df_table) <- c("Depression Group",
+                     "n",
+                     "\\%",
+                     "PA Mean",
+                     "PA $SD$",
+                     "NA Mean",
+                     "NA $SD$",
+                     "StM Mean",
+                     "StM $SD$",
+                     "PA $\\omega$",
+                     "NA $\\omega$",
+                     "StM $\\omega$")
+df_table <- df_table %>% 
+  select(`Depression Group`, n, "\\%", "PA Mean", "PA $SD$", "PA $\\omega$", "NA Mean", "NA $SD$", "NA $\\omega$", "StM Mean", "StM $SD$", "StM $\\omega$")
+names(df_table) <- c("Depression Group",
+                     "n",
+                     "\\%",
+                     rep(c("Mean", "$SD$", "$\\omega$"), times = 3))
+```
+
+```{r make the latex table}
+library(kableExtra)
+kable(df_table, "latex", booktabs = TRUE, escape = FALSE, align = "r") %>% 
+  add_header_above(c(" " = 3, "Positive Affectivity" = 3, "Negative Affectivity" = 3, "Savoring the Moment" = 3)) %>%
+  row_spec(0, align = "c") %>% 
+  as_image()
 ```
 
