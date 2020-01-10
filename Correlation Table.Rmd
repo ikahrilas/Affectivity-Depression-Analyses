@@ -52,7 +52,7 @@ sad_data_severity <- sad_data %>%
 ```
 
 ```{r create data frame for n, percent, mean, and sd for each variable}
-n <- sad_data_severity %>%
+no <- sad_data_severity %>%
   split(.$severity) %>% 
   map_df(~ {
     nrow(.x)
@@ -164,7 +164,9 @@ dep_group_omega <- dep_group_omega %>%
 ```
 
 ```{r merge all data frames together and transpose}
-final_df <- bind_rows(n, percent, mean_pa, sd_pa, mean_na, sd_na, mean_stm, sd_stm, dep_group_omega)
+no <- map_df(no, ~ as.character(.x))
+percent <- map_df(percent, ~ as.character(.x))
+final_df <- bind_rows(no, percent, mean_pa, sd_pa, mean_na, sd_na, mean_stm, sd_stm, dep_group_omega)
 names(final_df)[2] <- "Minimal"
 library(data.table) # install.packages("data.table")
 df_transpose <- transpose(final_df)
@@ -200,6 +202,8 @@ library(kableExtra)
 kable(df_table, "latex", booktabs = TRUE, escape = FALSE, align = "r") %>% 
   add_header_above(c(" " = 3, "Positive Affectivity" = 3, "Negative Affectivity" = 3, "Savoring the Moment" = 3)) %>%
   row_spec(0, align = "c") %>% 
+  column_spec(9, width = "0.6cm") %>%
+  column_spec(12, width = "0.7cm") %>% 
   as_image()
 ```
 
