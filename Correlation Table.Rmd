@@ -71,7 +71,7 @@ percent <- sad_data_severity %>%
 mean_pa <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ {
-    round(mean(.x$masq_pa), digits = 2)
+    sprintf("%.2f", round(mean(.x$masq_pa), digits = 2))
   }) %>% 
   mutate(header = "PA Mean") %>% 
   select(header, everything())
@@ -79,7 +79,7 @@ mean_pa <- sad_data_severity %>%
 sd_pa <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ { 
-    round(sd(.x$masq_pa), digits = 2)
+    sprintf("%.2f", round(sd(.x$masq_pa), digits = 2))
     }) %>% 
   mutate(header = "PA SD") %>% 
   select(header, everything())
@@ -87,7 +87,7 @@ sd_pa <- sad_data_severity %>%
 mean_na <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ {
-    round(mean(.x$masq_na), digits = 2)
+    sprintf("%.2f", round(mean(.x$masq_na), digits = 2))
   }) %>% 
   mutate(header = "NA Mean") %>% 
   select(header, everything())
@@ -95,7 +95,7 @@ mean_na <- sad_data_severity %>%
 sd_na <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ { 
-    round(sd(.x$masq_na), digits = 2)
+    sprintf("%.2f", round(sd(.x$masq_na), digits = 2))
     }) %>% 
   mutate(header = "NA SD") %>% 
   select(header, everything())
@@ -103,7 +103,7 @@ sd_na <- sad_data_severity %>%
 mean_stm <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ {
-    round(mean(.x$savoring_moment), digits = 2)
+    sprintf("%.2f", round(mean(.x$savoring_moment), digits = 2))
   }) %>% 
   mutate(header = "StM Mean") %>% 
   select(header, everything())
@@ -111,7 +111,7 @@ mean_stm <- sad_data_severity %>%
 sd_stm <- sad_data_severity %>% 
   split(.$severity) %>% 
   map_df(~ { 
-    round(sd(.x$savoring_moment), digits = 2)
+    sprintf("%.2f", round(sd(.x$savoring_moment), digits = 2))
     }) %>% 
   mutate(header = "StM SD") %>% 
   select(header, everything())
@@ -146,7 +146,10 @@ all_items <- list(pa = pa_items,
 # define another very cool function function that will iterate over the list of items and output a data frame containing macdonald's 
 # omega for each variable partitioned by severity group.
 cool <- function(items) {
-map(dep_groups, ~ round(omega(.x, items)$est, digits = 2))
+map(dep_groups, ~ gsub(".*\\.",".", sprintf("%.2f", round(omega(.x, items)$est, digits = 2)
+                                          )
+                       )
+    )
 }
 
 # run the function
