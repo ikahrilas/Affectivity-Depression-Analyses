@@ -40,7 +40,8 @@ cor(as.matrix(sad_data_int))
 ```
 
 ```{r create severity designation variable based on descriptors from Kroenke et al., 2001}
-sad_data_severity <- sad_data %>% 
+sad_data_severity <- sad_data %>%
+  mutate(phq_total = phq_total - 9) %>% 
   mutate("severity" = if_else(phq_total > 20, "Severe", 
                               if_else(phq_total > 15, "Moderately Severe",
                                       if_else(phq_total > 10, "Moderate",
@@ -205,5 +206,9 @@ kable(df_table, "latex", booktabs = TRUE, escape = FALSE, align = "r") %>%
   column_spec(9, width = "0.6cm") %>%
   column_spec(12, width = "0.7cm") %>% 
   as_image()
+```
+
+```{r pair-wise t tests}
+
 ```
 
