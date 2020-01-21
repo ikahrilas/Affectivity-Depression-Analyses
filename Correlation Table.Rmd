@@ -209,6 +209,12 @@ kable(df_table, "latex", booktabs = TRUE, escape = FALSE, align = "r") %>%
 ```
 
 ```{r pair-wise t tests}
+vars <- list(pos_affectivity = sad_data_severity$masq_pa,
+             neg_affectivity = sad_data_severity$masq_na,
+             savoring_moment = sad_data_severity$savoring_moment)
 
+map(vars, ~ {
+  pairwise.t.test(.x, g = sad_data_severity$severity, p.adjust.method = "holm")
+})
 ```
 
