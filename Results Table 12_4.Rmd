@@ -794,5 +794,5 @@ kable(results_total, "latex", escape = FALSE, booktabs = TRUE, align = c("l", re
   row_spec(0, align = "c") %>% 
   row_spec(11, hline_after = TRUE) %>% 
   landscape() %>% 
-  as_image()
+  save_kable("results.pdf")
 ```
