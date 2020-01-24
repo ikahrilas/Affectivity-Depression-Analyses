@@ -439,9 +439,9 @@ dep_coef <- c(
     pull() %>%
     round(digits = 2),
   sprintf("%.2f", parms %>%
-     filter(lhs == "phq_total", rhs == "anticipating")) %>%
+     filter(lhs == "phq_total", rhs == "anticipating") %>%
      select(est) %>%
-     pull(),
+     pull()),
   parms %>% 
     filter(lhs == "phq_total", rhs == "savoring_moment") %>% 
     select(est) %>% 
@@ -457,11 +457,10 @@ dep_coef <- c(
      select(est) %>%
      pull() %>%
     round(digits = 2),
-  parms %>% 
-    filter(lhs == "phq_total", rhs == "anticipating") %>% 
-    select(est) %>% 
-    pull() %>% 
-    round(digits = 2),
+  sprintf("%.2f", parms %>%
+     filter(lhs == "phq_total", rhs == "anticipating") %>%
+     select(est) %>%
+     pull()),
   parms %>% 
     filter(lhs == "phq_total", rhs == "savoring_moment") %>% 
     select(est) %>% 
@@ -481,11 +480,11 @@ dep_coef <- c(
      filter(lhs == "phq_total", rhs == "pswq_total") %>%
      select(est) %>%
      pull() %>%
-    round(digits = 2),
-sprintf("%.2f", parms %>%
-     filter(lhs == "phq_total", rhs == "masq_aa")) %>%
+     round(digits = 2),
+  sprintf("%.2f", parms %>%
+     filter(lhs == "phq_total", rhs == "masq_aa") %>%
      select(est) %>%
-     pull(),
+     pull()),
   " ",
   " ",
   " "
@@ -625,32 +624,32 @@ results_dep <- tibble(Coef. = dep_coef,
 ind_coef <- c(
   "--------",
   sprintf("%.2f", parms %>%
-     filter(rhs == "a3*b3")) %>%
+     filter(rhs == "a3*b3") %>%
      select(est) %>%
-     pull(),
+     pull()),
   parms %>%
     filter(rhs == "a2*b2") %>% 
     select(est) %>% 
     pull() %>% 
     round(digits = 2),
   sprintf("%.2f", parms %>%
-     filter(rhs == "a1*b1")) %>%
+     filter(rhs == "a1*b1") %>%
      select(est) %>%
-     pull(),
+     pull()),
   "--------",
   sprintf("%.2f", parms %>%
-     filter(rhs == "aiii*b3")) %>%
+     filter(rhs == "aiii*b3") %>%
      select(est) %>%
-     pull(),
+     pull()),
   parms %>% 
     filter(rhs == "aii*b2") %>% 
     select(est) %>% 
     pull() %>% 
     round(digits = 2), 
   sprintf("%.2f", parms %>%
-     filter(rhs == "ai*b1")) %>%
+     filter(rhs == "ai*b1") %>%
      select(est) %>%
-     pull(),
+     pull()),
   rep("--------", times = 3),
   " ",
   " ",
@@ -680,9 +679,9 @@ ind_ci_lower <- c("--------",
                     pull() %>% 
                     round(digits = 2),
                   sprintf("%.2f", parms %>%
-                    filter(rhs == "aii*b2")) %>%
+                    filter(rhs == "aii*b2") %>%
                     select(ci.lower) %>%
-                    pull(),
+                    pull()),
                   parms %>%
                     filter(rhs == "ai*b1") %>% 
                     select(ci.lower) %>% 
@@ -701,9 +700,9 @@ ind_ci_upper <- c("--------",
                     pull() %>%
                     round(digits = 2),
                   sprintf("%.2f", parms %>%
-                    filter(rhs == "a2*b2")) %>%
+                    filter(rhs == "a2*b2") %>%
                     select(ci.upper) %>%
-                    pull(),
+                    pull()),
                   parms %>%
                     filter(rhs == "a1*b1") %>% 
                     select(ci.upper) %>% 
@@ -721,9 +720,9 @@ ind_ci_upper <- c("--------",
                     pull() %>% 
                     round(digits = 2),
                   sprintf("%.2f", parms %>%
-                    filter(rhs == "ai*b1")) %>%
+                    filter(rhs == "ai*b1") %>%
                     select(ci.upper) %>%
-                    pull(),
+                    pull()),
                   rep("--------", times = 3),
                   " ",
                   " ",
