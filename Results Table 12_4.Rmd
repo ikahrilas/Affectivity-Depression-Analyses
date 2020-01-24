@@ -661,24 +661,24 @@ ind_ci_lower <- c("--------",
                     filter(rhs == "a3*b3") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
-                    round(digits = 2),
+                    round(digits = 3),
                   parms %>%
                     filter(rhs == "a2*b2") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
-                    round(digits = 2),
+                    round(digits = 3),
                   parms %>%
                     filter(rhs == "a1*b1") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
-                    round(digits = 2),
+                    round(digits = 3),
             "--------",
                   parms %>%
                     filter(rhs == "aiii*b3") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
-                    round(digits = 2),
-                  sprintf("%.2f", parms %>%
+                    round(digits = 3),
+                  sprintf("%.3f", parms %>%
                     filter(rhs == "aii*b2") %>%
                     select(ci.lower) %>%
                     pull()),
@@ -686,7 +686,7 @@ ind_ci_lower <- c("--------",
                     filter(rhs == "ai*b1") %>% 
                     select(ci.lower) %>% 
                     pull() %>% 
-                    round(digits = 2),
+                    round(digits = 3),
             rep("--------", times = 3),
             " ",
             " ",
@@ -698,8 +698,8 @@ ind_ci_upper <- c("--------",
                     filter(rhs == "a3*b3") %>% 
                     select(ci.upper) %>% 
                     pull() %>%
-                    round(digits = 2),
-                  sprintf("%.2f", parms %>%
+                    round(digits = 3),
+                  sprintf("%.3f", parms %>%
                     filter(rhs == "a2*b2") %>%
                     select(ci.upper) %>%
                     pull()),
@@ -707,19 +707,19 @@ ind_ci_upper <- c("--------",
                     filter(rhs == "a1*b1") %>% 
                     select(ci.upper) %>% 
                     pull() %>%
-                    round(digits = 2),
+                    round(digits = 3),
                   "--------",
                   parms %>% 
                     filter(rhs == "aiii*b3") %>% 
                     select(ci.upper) %>% 
                     pull() %>% 
-                    round(digits = 2),
+                    round(digits = 3),
                   parms %>% 
                     filter(rhs == "aii*b2") %>% 
                     select(ci.upper) %>% 
                     pull() %>% 
-                    round(digits = 2),
-                  sprintf("%.2f", parms %>%
+                    round(digits = 3),
+                  sprintf("%.3f", parms %>%
                     filter(rhs == "ai*b1") %>%
                     select(ci.upper) %>%
                     pull()),
