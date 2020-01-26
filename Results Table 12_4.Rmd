@@ -640,6 +640,7 @@ ind_coef <- c(
   sprintf("%.2f", parms %>%
      filter(rhs == "aiii*b3") %>%
      select(est) %>%
+     abs() %>% 
      pull()),
   parms %>% 
     filter(rhs == "aii*b2") %>% 
@@ -649,6 +650,7 @@ ind_coef <- c(
   sprintf("%.2f", parms %>%
      filter(rhs == "ai*b1") %>%
      select(est) %>%
+     abs() %>% 
      pull()),
   rep("--------", times = 3),
   " ",
