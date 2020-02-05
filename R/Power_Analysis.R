@@ -40,5 +40,11 @@ mediation <- "pa_rem := a1*b1
 
 power_results <- bmem::power.boot(model = sad_model_power, 
                                   indirect = mediation, 
-                                  nobs = 1618,
+                                  nobs = 1618, # run with 2122
                                   parallel = "snow")
+
+power_results_min <- bmem::power.boot(model = sad_model_power, 
+                                      indirect = mediation, 
+                                      nobs = 3500,
+                                      parallel = "multicore",
+                                      ncore = 8)
