@@ -45,6 +45,6 @@ power_results <- bmem::power.boot(model = sad_model_power,
 
 power_results_min <- bmem::power.boot(model = sad_model_power, 
                                       indirect = mediation, 
-                                      nobs = 3500,
+                                      nobs = 2700,
                                       parallel = "multicore",
                                       ncore = 8)
